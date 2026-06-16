@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	
+	<entry key="updateBoard">
+	UPDATE BOARD SET
+	BOARD_TITLE = ?,
+	BOARD_CONTENT = ?,
+	AREA_CATEGORY_CD = ?,
+	CATEGORY_CD = ?,
+	MODIFY_DT = SYSTIMESTAMP
+	WHERE BOARD_NO = ?
+	</entry>
+	
+	<entry key="updateAttachment">
+	UPDATE ATTACHMENT SET
+	FILE_NM = ?
+	WHERE BOARD_NO = ?
+	AND FILE_LEVEL = ?
+	</entry>
+	
+	<entry key="deleteBoard">
+	UPDATE BOARD SET
+	BOARD_STATUS = 'N'
+	WHERE BOARD_NO = ?
+	</entry>
+	
+	<entry key="updateLike">
+	INSERT INTO BOARD_LIKE VALUES(?,?)
+	</entry>
+	
+	<entry key="updateLikeComment">
+	INSERT INTO COMMENT_LIKE VALUES(?,?)
+	</entry>
+	
+	<entry key="checkLike">
+	SELECT *FROM BOARD_LIKE
+	WHERE MEMBER_NO = ?
+	AND BOARD_NO = ?
+	</entry>
+	
+	<entry key="checkLikeComment">
+	SELECT *FROM COMMENT_LIKE
+	WHERE MEMBER_NO = ?
+	AND COMMENT_NO = ?
+	</entry>
+	
+</properties>

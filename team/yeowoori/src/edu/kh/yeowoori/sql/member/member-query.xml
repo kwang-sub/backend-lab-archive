@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<!-- 로그인 SQL -->
+	<entry key="login">
+	SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, 
+	MEMBER_CONTENT, MEMBER_NICKNAME,ENROLL_DATE, 
+	MEMBER_STATUS, MEMBER_GRADE, MEMBER_PROFILE
+	FROM MEMBER
+	WHERE MEMBER_ID = ? AND MEMBER_PW = ? AND MEMBER_STATUS='Y'
+	</entry>
+	
+	<!-- 비밀번호 변경 SQL -->
+	<entry key="changePwd">
+	UPDATE MEMBER SET
+   		MEMBER_PW =?
+	WHERE MEMBER_NO =?
+	AND MEMBER_PW = ?
+	</entry>
+	
+	<!-- 회원 가입 SQL -->
+	<entry key="signUp">
+		INSERT INTO MEMBER
+				VALUES( SEQ_MNO.NEXTVAL , ?, ?, ?, null, ?,
+	            DEFAULT,DEFAULT,DEFAULT, DEFAULT) 
+	</entry>
+	
+	<!-- 아이디 중복검사 SQL  -->
+	
+	<entry key="idDupCheck">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_STATUS = 'Y'
+		AND MEMBER_ID = ?
+	</entry>
+	
+		<!-- 회원 정보 수정 SQL -->
+	<entry key="memberUpdate">
+		UPDATE MEMBER SET 
+		    MEMBER_NiCKNAME = ?,
+		    MEMBER_PROFILE = ?,
+		    MEMBER_CONTENT = ?
+		WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 회원 탈퇴 SQL -->
+	<entry key="secession">
+		UPDATE MEMBER SET 
+			MEMBER_STATUS = 'N'
+		WHERE MEMBER_NO=? 
+	</entry>
+	
+	<!-- 닉네임 중복검사 SQL  -->
+	
+	<entry key="nickDupCheck">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_STATUS = 'Y'
+		AND MEMBER_NICKNAME = ?
+	</entry>
+	
+</properties>

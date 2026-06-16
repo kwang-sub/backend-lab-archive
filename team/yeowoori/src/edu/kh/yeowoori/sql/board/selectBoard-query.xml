@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	
+	<!-- 전체 게시글  수 + 게시판 이름 조회  -->
+	<entry key="getListCount">
+		SELECT COUNT(*),BOARD_NM
+		FROM BOARD
+		JOIN BOARD_TYPE USING(BOARD_TYPE_NO)
+		WHERE BOARD_TYPE_NO=?
+		AND BOARD_STATUS ='Y'
+		GROUP BY BOARD_NM
+	</entry>
+	<!-- 내가 작성한 게시글 수 + 게시판 이름 조회 -->
+	<entry key="GetMyListCount">
+		SELECT COUNT(*),BOARD_NM
+		FROM BOARD
+		JOIN BOARD_TYPE USING(BOARD_TYPE_NO)
+		WHERE BOARD_TYPE_NO=?
+		AND BOARD_STATUS ='Y'
+        AND MEMBER_NO = ?
+		GROUP BY BOARD_NM
+	</entry>
+	
+	<!-- 지역따른 게시글  수 + 게시판 이름 조회  -->
+	<entry key="areaGetListCount">
+		SELECT COUNT(*),BOARD_NM
+		FROM BOARD
+		JOIN BOARD_TYPE USING(BOARD_TYPE_NO)
+		WHERE BOARD_TYPE_NO=?
+		AND BOARD_STATUS ='Y'
+        AND AREA_CATEGORY_CD=?
+		GROUP BY BOARD_NM
+	
+	</entry>
+	<entry key="categoryGetListCount">
+		SELECT COUNT(*),BOARD_NM
+		FROM BOARD
+		JOIN BOARD_TYPE USING(BOARD_TYPE_NO)
+		WHERE BOARD_TYPE_NO=?
+		AND BOARD_STATUS ='Y'
+        AND CATEGORY_CD=?
+		GROUP BY BOARD_NM
+	
+	</entry>
+	<entry key="categoryAreaGetListCount">
+		SELECT COUNT(*),BOARD_NM
+		FROM BOARD
+		JOIN BOARD_TYPE USING(BOARD_TYPE_NO)
+		WHERE BOARD_TYPE_NO=?
+		AND BOARD_STATUS ='Y'
+        AND CATEGORY_CD=?
+        AND AREA_CATEGORY_CD=?
+		GROUP BY BOARD_NM
+	
+	</entry>
+	
+	
+	<!-- 게시글 목록 조회(페이징 처리 적용) -->
+	<entry key="selectBoardList">
+		SELECT*FROM
+			(SELECT ROWNUM RNUM, A.* FROM
+			    (SELECT * FROM BOARD_LIST
+			    WHERE board_status = 'Y' 
+			    AND board_type_no = ?
+			    ORDER BY BOARD_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+		
+	
+	</entry>
+	<!-- 지역 카테고리 적용된 게시글 조회  -->
+	<entry key="areaSelectBoardList">
+		SELECT*FROM
+			(SELECT ROWNUM RNUM, A.* FROM
+			    (SELECT * FROM BOARD_LIST
+			    WHERE board_status = 'Y' 
+			    AND board_type_no = ?
+		AND AREA_CATEGORY_CD = ?
+			    ORDER BY BOARD_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!-- 카테고리 적용된 게시글 조회 -->
+	<entry key="categorySelectBoardList">
+	SELECT*FROM
+			(SELECT ROWNUM RNUM, A.* FROM
+			    (SELECT * FROM BOARD_LIST
+			    WHERE board_status = 'Y' 
+			    AND board_type_no = ?
+			AND CATEGORY_CD = ?
+			    ORDER BY BOARD_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="areaCategorySelectBoardList">
+	SELECT*FROM
+			(SELECT ROWNUM RNUM, A.* FROM
+			    (SELECT * FROM BOARD_LIST
+			    WHERE board_status = 'Y' 
+			    AND board_type_no = ?
+		AND CATEGORY_CD = ?
+		AND AREA_CATEGORY_CD = ?
+			    ORDER BY BOARD_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectMyBoardList">
+		SELECT*FROM
+			(SELECT ROWNUM RNUM, A.* FROM
+			    (SELECT * FROM BOARD_LIST
+			    WHERE board_status = 'Y' 
+			    AND board_type_no = ?
+			    AND MEMBER_NO = ?
+			    ORDER BY BOARD_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!-- 상세조회 -->
+	<entry key="selectBoard">
+	SELECT*FROM BOARD_DETAIL
+	WHERE BOARD_NO = ?
+	AND BOARD_STATUS = 'Y'
+	</entry>
+	
+	<!-- 공지사항 페이지네이션 -->
+	<entry key="getNoticePagination">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE NOTICE_STATUS = 'Y'
+	</entry>
+	
+	<!-- 공지사항 리스트 조회  -->
+	<entry key="selectNoticeBoardList">
+		SELECT*FROM
+			(SELECT ROWNUM RNUM, A.* FROM
+			    (SELECT * FROM NOTICE
+			    WHERE NOTICE_STATUS = 'Y' 
+			    ORDER BY NOTICE_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ? 
+	
+	</entry>
+	
+	<!-- 상세조회 조회수 증가 -->
+	<entry key="increaseReadCount">
+	UPDATE BOARD SET READ_COUNT = READ_COUNT+1
+	WHERE BOARD_NO = ?
+	</entry>
+	
+	<!-- 카테고리 리스트 조회 -->
+	<entry key="selectCategoryList">
+	SELECT*FROM CATEGORY
+	</entry>
+	<!-- 내가 좋아요한 게시글 개수 -->
+	<entry key="GetLikeListCount">
+	
+		SELECT COUNT(*),BOARD_NM
+		FROM BOARD
+		JOIN BOARD_TYPE USING(BOARD_TYPE_NO)
+		JOIN (SELECT BOARD_NO
+		        FROM BOARD_LIKE
+		        WHERE MEMBER_NO =?) USING (BOARD_NO)
+		WHERE BOARD_TYPE_NO = ? 
+		GROUP BY BOARD_NM
+	</entry>
+	<entry key="selectLikeBoardList">
+		SELECT*FROM
+			(SELECT ROWNUM RNUM, A.* FROM
+			    (SELECT * FROM BOARD_LIST
+                JOIN (SELECT BOARD_NO
+                        FROM BOARD_LIKE
+                        WHERE MEMBER_NO =?) USING (BOARD_NO)
+			    WHERE board_status = 'Y' 
+			    AND board_type_no = ?
+			    ORDER BY BOARD_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="getSearchPagination">
+		SELECT COUNT(*)
+			FROM BOARD
+			WHERE BOARD_TYPE_NO = ?
+			AND BOARD_STATUS = 'Y'
+			
+	</entry>
+	<entry key="selectSearchBoardList1">
+		SELECT*FROM
+			(SELECT ROWNUM RNUM, A.* FROM
+			    (SELECT * FROM BOARD_LIST
+			    WHERE board_status = 'Y' 
+			    AND board_type_no = ?
+	</entry>
+	<entry key="selectSearchBoardList2">
+		ORDER BY BOARD_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ? 
+	</entry>
+	
+</properties>

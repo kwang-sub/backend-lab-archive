@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	
+	<entry key="nextBoardNo">
+		SELECT SEQ_BNO.NEXTVAL FROM DUAL
+	</entry>
+	
+	<entry key="insertBoard">
+	INSERT INTO BOARD VALUES(?,?,?,DEFAULT,DEFAULT,DEFAULT,DEFAULT,?,?,?,?)
+	</entry>
+	
+	<entry key="insertAttachment">
+		INSERT INTO ATTACHMENT VALUES(SEQ_FNO.NEXTVAL,?,?,?,?)
+	</entry>
+	<entry key="insertNoticeBoard">
+		INSERT INTO NOTICE VALUES(SEQ_NNO.NEXTVAL, ?, ?, DEFAULT, DEFAULT, DEFAULT ,?)
+	
+	</entry>
+</properties>

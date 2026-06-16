@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="getMyTrip">
+		SELECT ROWNUM, FILE_PATH,FILE_NM,MEMBER_NO,COUNT,BOARD_NO
+		FROM ATTACHMENT
+		LEFT JOIN BOARD USING (BOARD_NO)
+        JOIN (SELECT COUNT(*) COUNT,MEMBER_NO
+                FROM BOARD
+                WHERE BOARD_TYPE_NO =1
+                AND MEMBER_NO =?
+                AND BOARD_STATUS = 'Y'
+                GROUP BY  MEMBER_NO) USING (MEMBER_NO)
+		WHERE FILE_LEVEL = 0
+		AND MEMBER_NO = ?
+		AND BOARD_STATUS = 'Y'
+		AND BOARD_TYPE_NO=1
+		AND  ROWNUM &lt; 5
+		ORDER BY FILE_NO DESC
+	</entry>
+	<entry key="getMyQuestion">
+		SELECT ROWNUM, BOARD_TITLE, BOARD_NO,COUNT
+		FROM BOARD
+        JOIN (SELECT COUNT(*) COUNT,MEMBER_NO
+                FROM BOARD
+                WHERE BOARD_TYPE_NO =2
+                AND MEMBER_NO =?
+                AND BOARD_STATUS = 'Y'
+                GROUP BY  MEMBER_NO) USING (MEMBER_NO)
+		WHERE MEMBER_NO = ?
+		AND BOARD_STATUS = 'Y'
+		AND BOARD_TYPE_NO=2
+		AND  ROWNUM &lt; 7
+		ORDER BY BOARD_NO DESC
+		
+	
+	</entry>
+	<entry key="getMyTogether">
+		SELECT ROWNUM, BOARD_TITLE, BOARD_NO,COUNT
+		FROM BOARD
+        JOIN (SELECT COUNT(*) COUNT,MEMBER_NO
+                FROM BOARD
+                WHERE BOARD_TYPE_NO =3
+                AND MEMBER_NO =?
+                AND BOARD_STATUS = 'Y'
+                GROUP BY  MEMBER_NO) USING (MEMBER_NO)
+		WHERE MEMBER_NO = ?
+		AND BOARD_STATUS = 'Y'
+		AND BOARD_TYPE_NO=3
+		AND  ROWNUM &lt; 7
+		ORDER BY BOARD_NO DESC
+	</entry>
+	<entry key="getBoardLikeCount">
+		SELECT COUNT(*) BOARD_LIKE,MEMBER_NO 
+		FROM BOARD_LIKE
+		WHERE MEMBER_NO = ?
+		GROUP BY MEMBER_NO
+	</entry>
+	<entry key="getCommentLikeCount">
+	
+		SELECT COUNT(*) COMMENT_LIKE,MEMBER_NO 
+		FROM COMMENT_LIKE
+		WHERE MEMBER_NO = ?
+		GROUP BY MEMBER_NO
+	</entry>
+	<!-- 내가 좋아요한 여행글 사진가져오기 -->
+	<entry key="getLikeTrip">
+		SELECT ROWNUM,FILE_PATH,FILE_NM,BOARD_NO,(SELECT COUNT(*)
+                                            FROM BOARD
+                                            JOIN (SELECT BOARD_NO
+                                                    FROM BOARD_LIKE
+                                                    WHERE MEMBER_NO =?) USING (BOARD_NO)
+                                            WHERE BOARD_TYPE_NO = 1) COUNT
+		FROM ATTACHMENT
+		JOIN BOARD USING (BOARD_NO)
+		JOIN (SELECT MEMBER_NO,BOARD_NO
+		        FROM BOARD_LIKE
+		        WHERE MEMBER_NO=?) USING (BOARD_NO)
+		WHERE FILE_LEVEL = 0
+				AND BOARD_STATUS = 'Y'
+				AND BOARD_TYPE_NO=1
+				AND  ROWNUM &lt; 5
+				ORDER BY FILE_NO DESC
+	</entry>
+	<entry key="getLikeQuestion">
+		SELECT ROWNUM,BOARD_TITLE,BOARD_CONTENT,(SELECT COUNT(*)
+                                            FROM BOARD
+                                            JOIN (SELECT BOARD_NO
+                                                    FROM BOARD_LIKE
+                                                    WHERE MEMBER_NO =?) USING (BOARD_NO)
+                                            WHERE BOARD_TYPE_NO = 2) COUNT
+		
+		FROM BOARD 
+		JOIN (SELECT MEMBER_NO,BOARD_NO
+		        FROM BOARD_LIKE
+		        WHERE MEMBER_NO=?) USING (BOARD_NO)
+		WHERE   BOARD_STATUS = 'Y'
+				AND  ROWNUM &lt; 7
+                AND BOARD_TYPE_NO = 2
+				ORDER BY BOARD_NO DESC  
+	</entry>
+	<entry key="getLikeTogether">
+		SELECT ROWNUM,BOARD_TITLE,BOARD_CONTENT,(SELECT COUNT(*)
+                                            FROM BOARD
+                                            JOIN (SELECT BOARD_NO
+                                                    FROM BOARD_LIKE
+                                                    WHERE MEMBER_NO =?) USING (BOARD_NO)
+                                            WHERE BOARD_TYPE_NO = 3) COUNT
+		
+		FROM BOARD 
+		JOIN (SELECT MEMBER_NO,BOARD_NO
+		        FROM BOARD_LIKE
+		        WHERE MEMBER_NO=?) USING (BOARD_NO)
+		WHERE   BOARD_STATUS = 'Y'
+				AND  ROWNUM &lt; 7
+                AND BOARD_TYPE_NO = 3
+				ORDER BY BOARD_NO DESC  
+	</entry>
+</properties>

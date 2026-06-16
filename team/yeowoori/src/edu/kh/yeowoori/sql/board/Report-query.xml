@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="reportBoard">
+		INSERT INTO BOARD_REPORT VALUES(SEQ_RBNO.NEXTVAL, 1, 1, DEFAULT, DEFAULT, ?, ?)
+	</entry>
+	<entry key="reportComment">
+		INSERT INTO COMMENT_REPORT VALUES(SEQ_RCNO.NEXTVAL, 1, 1, DEFAULT, DEFAULT, ?, ?)
+	</entry>
+	
+</properties>
