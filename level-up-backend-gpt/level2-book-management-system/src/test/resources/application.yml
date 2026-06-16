@@ -1,0 +1,35 @@
+spring:
+  jackson:
+    deserialization:
+      FAIL_ON_NULL_FOR_PRIMITIVES: true
+
+  application:
+    name: level2-book-management-system
+
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    open-in-view: false
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+jwt:
+  expiration_time: 900000 # 15 minutes
+  refresh_expiration_time: 1209600000 # 14 days
+  secret: z+Y7fUQyHFO8k59jOnOqKD2fUq4bdxkULtNuM4uhUOw=
+app:
+  crypto:
+    aes256gcm:
+      key: z+Y7fUQyHFO8k59jOnOqKD2fUq4bdxkULtNuM4uhUOw=

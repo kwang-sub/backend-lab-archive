@@ -1,0 +1,40 @@
+spring:
+  jackson:
+    deserialization:
+      FAIL_ON_NULL_FOR_PRIMITIVES: true
+
+  application:
+    name: level2-book-management-system
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/book?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    open-in-view: false
+
+jwt:
+  expiration_time: 900000 # 15 minutes
+  refresh_expiration_time: 1209600000 # 14 days
+  secret: HOUcUnw574DticDirb6Y6y1MVkniCvtsfVHPq1fSjS8=
+
+app:
+  crypto:
+    aes256gcm:
+            key: z+Y7fUQyHFO8k59jOnOqKD2fUq4bdxkULtNuM4uhUOw=
+
+# TODO 로깅 블로그
+logging:
+  level:
+#    com.p6spy: info
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace    # 바인딩 파라미터 (Hibernate 6.x)
+#    org.hibernate.type.descriptor.sql: trace  # 바인딩 파라미터 (Hibernate 5.x)
