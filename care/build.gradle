@@ -1,0 +1,91 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+    id 'java'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT-' + new Date().format("yyyyMMddHHmmss")
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+enabled = false
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    /*개발용 DB*/
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    /*소셜로그인*/
+    compileOnly 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    /*테스트 코드 mock*/
+    implementation 'org.mockito:mockito-core'
+    /*테스트 DB h2*/
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+    /*query dsl*/
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    /*외부 api 사용 web client*/
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    /*XSS 공격 방지*/
+    implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
+    implementation 'org.apache.commons:commons-text:1.9'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+/*아래는 query dsl 설정 부분*/
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl { 
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+sourceSets { 
+    main.java.srcDir querydslDir
+}
+
+configurations { 
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl { 
+    options.annotationProcessorPath = configurations.querydsl
+}
