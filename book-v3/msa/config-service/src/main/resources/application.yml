@@ -1,0 +1,26 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: 1234
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:C:\workspace\git-local-ropo
+#        git:
+#          uri: file:C:\workspace\git-local-ropo
+#          uri: https://github.com/kwang-sub/sprig-cloud-config.git
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busrefresh

@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+// https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.26.3'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.0'
+    // https://mvnrepository.com/artifact/org.jbehave/jbehave-core
+    implementation group: 'org.jbehave', name: 'jbehave-core', version: '4.1'
+
+}
+
+test {
+    useJUnitPlatform()
+}

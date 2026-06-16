@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: ch09
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+    url: jdbc:mysql://localhost:3306/ch09?serverTimezone=Asia/Seoul
+logging:
+  level:
+    com:
+      example:
+        ch05: debug

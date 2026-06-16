@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: user-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 1234
+#    url: jdbc:mysql://localhost:3306/msa_user?serverTimezone=Asia/Seoul
+
+server:
+  port: 0
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+
+greeting:
+  message: Welcome to the Simple E-commerce
+
+
+#token:
+#  expiration_time: 86400000
+#  secret: sdgadrfhgokjnreqoihnoaeinrbupoiajtngiupoawehjnruiawehrngiuahenriuaeniuahnerhiuaniunqwiurnqwiutniuqnwgiounreaghoin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh
+logging:
+  level:
+    com.example.userservice.client: DEBUG

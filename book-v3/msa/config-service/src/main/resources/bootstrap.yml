@@ -1,0 +1,6 @@
+encrypt:
+#  key: aasdjnmoigrenhoiunaphiuboaoinhbgaeoiunyhaipuoerniouanreoithunaiuhn
+  key-store:
+    location: file:C:\workspace\git-local-ropo\keystore\apiEncryptionKey.jks
+    password: test1234
+    alias: apiEncryptionKey

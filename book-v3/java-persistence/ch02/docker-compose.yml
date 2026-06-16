@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      TZ: Asia/Seoul
+    depends_on:
+      - db
+    networks:
+      - test_network
+
+  db:
+    image: mysql:8.0.20
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ch02
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: 1234
+      TZ: 'Asia/Seoul'
+    ports:
+      - "3306:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+    volumes:
+      - C:\workspase\db\mysql_docker:/var/lib/mysql
+    networks:
+      - test_network  # db 서비스는 'test_network'에 연결됨
+
+networks:
+  test_network:

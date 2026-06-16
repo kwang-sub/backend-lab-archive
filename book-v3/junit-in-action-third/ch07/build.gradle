@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0') // JUnit 5 BOM
+    testImplementation 'org.junit.jupiter:junit-jupiter'      // JUnit 5
+    implementation 'junit:junit:4.13.2'                   // JUnit 4
+    testImplementation 'junit:junit:4.13.2'                   // JUnit 4
+    testImplementation 'org.junit.vintage:junit-vintage-engine' // JUnit Vintage Engine
+    testImplementation 'org.assertj:assertj-core:3.26.3'      // AssertJ
+    implementation 'org.mortbay.jetty:jetty:7.0.0.pre5'
+}
+
+test {
+    useJUnitPlatform()
+}

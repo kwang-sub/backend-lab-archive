@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: ssia-ch11-ex1-s1
+  datasource:
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:test;MODE=MySQL;
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true

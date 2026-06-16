@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    // https://mvnrepository.com/artifact/commons-logging/commons-logging
+    implementation group: 'commons-logging', name: 'commons-logging', version: '1.1.1'
+    // https://mvnrepository.com/artifact/org.easymock/easymock
+    testImplementation group: 'org.easymock', name: 'easymock', version: '4.2'
+// https://mvnrepository.com/artifact/org.easymock/easymockclassextension
+    testImplementation group: 'org.easymock', name: 'easymockclassextension', version: '3.2'
+// https://mvnrepository.com/artifact/org.jmock/jmock-junit5
+    testImplementation group: 'org.jmock', name: 'jmock-junit5', version: '2.12.0'
+// https://mvnrepository.com/artifact/org.jmock/jmock-legacy
+    testImplementation group: 'org.jmock', name: 'jmock-legacy', version: '2.5.1'
+// https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.2.4'
+
+}
+
+test {
+    useJUnitPlatform()
+}

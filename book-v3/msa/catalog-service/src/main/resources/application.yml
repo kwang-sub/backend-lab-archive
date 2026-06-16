@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: catalog-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+    generate-ddl: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+    url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Seoul
+  sql:
+    init:
+      mode: never
+      data-locations: classpath:data.sql
+
+server:
+  port: 0
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+logging:
+  level:
+    com.example.catalogservice: debug

@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // https://mvnrepository.com/artifact/org.jboss.arquillian/arquillian-bom
+    testImplementation group: 'org.jboss.arquillian', name: 'arquillian-bom', version: '1.4.0.Final', ext: 'pom'
+    // https://mvnrepository.com/artifact/org.jboss.spec/jboss-javaee-7.0
+    compileOnly group: 'org.jboss.spec', name: 'jboss-javaee-7.0', version: '1.0.3.Final', ext: 'pom'
+//    // https://mvnrepository.com/artifact/javax.servlet/servlet-api
+//    compileOnly group: 'javax.servlet', name: 'servlet-api', version: '2.5'
+    implementation 'javax.servlet:servlet-api:2.5'
+// https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.2.4'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    // https://mvnrepository.com/artifact/org.junit.vintage/junit-vintage-engine
+    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.6.0'
+// https://mvnrepository.com/artifact/org.jboss.arquillian.junit/arquillian-junit-container
+    testImplementation group: 'org.jboss.arquillian.junit', name: 'arquillian-junit-container', version: '1.7.0.Final'
+// https://mvnrepository.com/artifact/org.jboss.arquillian.container/arquillian-weld-ee-embedded-1.1
+    testImplementation group: 'org.jboss.arquillian.container', name: 'arquillian-weld-ee-embedded-1.1', version: '1.0.0.CR9'
+// https://mvnrepository.com/artifact/org.jboss.weld/weld-core-impl
+    implementation group: 'org.jboss.weld', name: 'weld-core-impl', version: '2.3.5.Final'
+
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
