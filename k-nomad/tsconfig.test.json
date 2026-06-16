@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "outDir": ".tmp-tests",
+    "rootDir": ".",
+    "jsx": "react-jsx",
+    "types": ["node"],
+    "noEmit": false,
+    "incremental": false
+  },
+  "include": ["crypto-ranking-board.test.ts", "lib/city-ranking.ts", "lib/supabase/config.test.ts", "lib/supabase/config.ts"],
+  "exclude": ["node_modules", "worktree", ".next"]
+}

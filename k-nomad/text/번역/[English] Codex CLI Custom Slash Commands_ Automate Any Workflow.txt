@@ -1,0 +1,673 @@
+Okay, in this video I'm going to show
+you one of the most powerful but
+underutilized features of Codeex CLI and
+that is custom slash commands. So
+obviously we can see on screen there are
+slash commands that are built in with
+Codex that you can use for various
+things. We'll walk through a few of
+those shortly, but the real power here
+is the ability to install custom slash
+commands for any task or workflow that
+you like. So this allows you to save a
+lot of time and build out some really
+powerful workflows. And I'm going to
+show you exactly how to do that in this
+video. So, by the end of the video,
+you'll understand exactly how they work
+and you'll be able to create your own
+first custom slash command from scratch.
+But first, if you're not sure what slash
+commands are or you're new to Codeex
+CLI, let's just quickly touch on the
+existing slash commands that are built
+into Codeex. That will give you a good
+idea on what they are and how they work.
+You can see there's a list of slash
+commands here that are available and a
+description of what each does. We can
+also see at the top here it says what
+model we're using. So, GPT 5 codeex
+high. And then we've got a command here,
+model, which we can use to change the
+model that we're using. So, first of
+all, let's just uh hit forward slash and
+that's going to bring up all of the
+available slash commands. We can see
+that it has all of those ones already
+visible on the screen, plus a few
+others. One of those obviously is model.
+So, let's type in model and see how it
+works. We can see if we hit enter on
+that slash command, it's going to then
+bring up a new session here that says
+select model and effort. We're using
+GPT5 codec, so we can hit enter. We can
+then select the reasoning level. So
+we've got low, medium, and high. We're
+using high here, so we're going to hit
+enter on that. And that's just an
+example of one of the slash commands.
+Another commonly used one is approvals.
+So if you want to change the approval
+method, you can do that using the
+approvals command. You can see here
+there are three levels of approval.
+Level one is read only. Level two is
+auto. So that allows codeex to read
+files, make edits, and run commands. And
+then full access allows Codex to make
+changes to any files on your machine. So
+not just the project it's working in.
+Let's use number two for this video. So
+we'll hit enter on the auto approval
+mode. Let's also quickly touch on the
+two levels of SL commands that you can
+install. So you can either install a
+command at the global level. So it's
+accessible then to all projects that you
+work on on your machine or you can
+install a command at the project level.
+If you do it that way, you'll only be
+able to use that custom slash command
+within the project it's installed in. By
+default, I prefer to just install custom
+SL commands at the global level. It's
+likely that a lot of the commands that I
+install are repeatable across multiple
+projects. So, it's handy to have them
+accessible at all times across all
+projects. The only time where it might
+make sense to use the project level is
+if you're working in a business and
+perhaps some of the data within that
+custom/comand build is sensitive. If you
+need to protect it perhaps from being a
+global level accessible command, that's
+when you might use the project level.
+But as mentioned for this video, we're
+just going to install all custom/comands
+at the global level. The next thing we
+need to do is talk about the process for
+installing a custom slash command. So
+there are a few ways you can do it, and
+I'll show you shortly how the process
+works once it is installed, so you can
+see sort of the back end of how they
+work. But my recommendation and I think
+the easiest and best way to install
+custom slash commands is to open up a
+codeex chat directly with codeex and
+tell it what you want it to install. And
+I'll show you a few ways as well how you
+can automate that process of of building
+custom slash commands. But that's the
+easiest way. If you just tell Codeex
+what you want to build and and explain
+that you want it built as a custom slash
+command, Codex can then go ahead and do
+it for you. There is a manual way to do
+it, but chatting with Codeex and letting
+it do the work for you is the fastest
+and best method. Before we dive into the
+anatomy of a custom slash command to
+show you the back end of how it actually
+works, I'll just quickly show you how
+you can check to see what custom slash
+commands are installed on your machine.
+So, if you've just installed one, you
+want to check that it has successfully
+installed. Or you just want to see what
+custom slash commands you have access
+to. You can do that by hitting forward
+slash and typing in prompts. That's
+going to bring up the list of custom
+slash commands that are installed on
+your machine. As you can see here, we've
+got one custom slash command installed,
+and that's the code review slash
+command. So, what I'll do now is I will
+show you exactly how it works on the
+back end. So we will say to codeex show
+me the full
+contents of codeexprompts code
+review.mmd. So you can see here that
+this path I've mapped out here
+codeex/prompts
+is the directory where all of your
+custom/comands live. And the back end of
+a custom/comand is a markdown file. So
+that markdown file has instructions for
+codeex on how to execute that command.
+So whenever you run that command, it
+will then locate code review.md or
+whatever the name of your custom/comand
+MD file is and it will then use the
+context within that file to execute that
+command. So we'll hit enter here and see
+exactly what is in the code review.md
+file for this custom/comand. So you can
+see codeex has returned the full
+contents of the code review.md file. We
+can see this says perform a thorough
+code review of the specified file or
+directory. We've then got focus areas,
+code quality and readability, potential
+bugs or edge cases, and so on. We've
+then got a review process, a recommended
+output format for codecs to follow. So,
+we want it to identify critical issues,
+high priority, medium priority, and low
+priority. Also mentioned what's working
+well. And then we've assigned a target
+file or directory for the command to be
+run against. And we can see that is
+specified using dollar one. This is what
+we use to identify arguments. So if I
+was to run, for example, code review
+test.md,
+that means I'm asking codeex to do a
+code review of the test.md file. In this
+case, test.md is the first argument
+after the command. And that's what this
+is referring to here by target. Dollar
+one just means the first argument after
+the command. So if you are building your
+own custom commands and you want it to
+work in this way where I can use the
+command and then specify a file or
+directory for it to work in, that's
+where you would specify dollar one in
+this case arguments for what to follow
+for the command. And you can see the
+fallback if no target is specified
+review all code files in the current
+directory. So that's an important thing
+to consider if you do want to use code
+review but you only want to test one or
+two files. If you've got a large code
+base, but you don't specify a file, it's
+going to review everything. So, we can
+see here that essentially a
+custom/comand is asking codeex to call
+on a specific file that has context and
+instructions for what it should do when
+that command is called on. In this case,
+the code review command clearly
+instructs Codeex to thoroughly review
+the file or directory specified when the
+command is run. And it's got clear
+instructions and a process to follow on
+how to successfully execute that task.
+So, the purpose and the real power of
+custom slash commands is your ability to
+automate repetitive tasks or in-depth
+prompts that you use regularly. You can
+create those as custom slash commands
+using this markdown file system. And
+that's going to save you so much time
+because rather than having to write out
+these long detailed prompts every time
+or perhaps copy paste prompts across
+from wherever you might store regularly
+used prompts, you can just create a
+custom slash command in codec cli. Then
+all you need to do is run the command
+and it's going to source that uh
+detailed prompt and context and run that
+command for you. As an example, let's
+now just test this command to show you
+how it works. So for the purpose of this
+video, I've created a dummy directory
+with some files that have some issues
+that codeex should be able to pick up on
+when we run this command. So what I'm
+going to do here using the code review
+command is tell codeex to review the
+code of messy code.js. If we hit enter
+here, that will trigger the command. So
+it will source that backend file, that
+markdown file that we just walked
+through. It will use that as the context
+and instructions for this task. It will
+then locate messy code.js JS as you can
+see it's doing that right now and it
+will prepare a detailed code review of
+that file. So we can see here codeex has
+now responded. It's followed the process
+and the output as per the code review.md
+file that lives on the back end. It's
+identified critical issues and listed
+those here. It's also identified high
+priority issues, medium priority issues,
+low priority and then it's also
+mentioned what's working well. So it's
+completed the task. It's followed the
+exact context and instructions that
+lives in that code review.mmd file. And
+now what we can do is use the feedback
+here to fix this file. So if you are
+working on any projects where you want
+to review the code just to make sure
+that it's working well, especially for
+vibecoded projects, it's important to
+review the code thoroughly and regularly
+that AI writes for you. This is a great
+way to do that. So what we can do here
+is now respond and say um fix all the
+issues
+you've identified. And now Codex will go
+ahead and update the file by fixing
+these issues that it's found. You can
+see it's making a plan for what to do.
+And now it's going to go ahead and fix
+that file. So you can see Codex has now
+finished that task. It's cleaned up the
+code and fixed the issues that it
+identified and it's now recommending
+next steps as well. So we can see here
+that using this command is really
+helpful if we are working on a project
+where we want to review files regularly
+and make sure that the code is all
+correct and then if there are issues we
+want to quickly and effectively update
+them. This command is actually part of a
+set of commands that I use regularly for
+the projects that I work on. And next I
+want to show you a hack for how you can
+install multiple commands at once and
+how you can create multiple commands for
+a specific workflow. So, we'll jump over
+to my website and I will show you
+exactly how this set of commands works
+and how you can also quickly and easily
+install the same set of commands
+yourself. Okay, so we're on my website
+here. You can access this page at
+snapperai.io/codex-prompt-s.
+I'll put the link in the description
+below as well if you want to check it
+out. Essentially, what I've got here is
+some pre-built command packs for Codex
+CLI. So you can instantly download this
+pack which includes a copy paste prompt
+that will then instruct Codeex to
+install a set of commands. The one we're
+going to talk about in this video is the
+code analyzer pack. So you can see here
+there's a set of commands here
+specifically for code analysis. The
+first one is what we've already looked
+at which is the code review command. The
+purpose of that comprehensive code
+review with standards, line numbers, and
+fixes. That's one of five commands in
+the code analyzer pack. So as you can
+see there are some other commands.
+Security audit, refactor finder,
+dependency check, and generate tests.
+These are common custom slashcomands
+that I use when I'm reviewing code
+across my projects. For example,
+security audits going to check to make
+sure there's no vulnerabilities within
+the code or the specific uh directory
+that I've assigned as part of that
+command. Refactor finder is going to
+analyze my codebase and let me know if
+there's uh potential opportunities for
+refactoring. Dependency check is just
+going to check for outdated packages. So
+if I'm revisiting a project that I
+haven't worked on for a while, I'll run
+that to make sure that there are no uh
+issues that I need to identify from a
+dependency perspective. And then
+finally, generate test. So if I just
+want to do some testing on some files,
+uh that's when I'll use that command.
+And as mentioned, this code analyzer
+pack gives you a copy paste prompt to
+instantly install all five commands. So
+I'm going to show you how that works
+now. And this is an example of how you
+can take your custom slash commands to
+the next level. Copy paste prompts that
+install slash commands are a really
+quick and effective way to get access to
+some of these commands so that you can
+start working without having to go
+through the process of prompting codecs
+or trying to figure out what you need to
+include in those backend files to power
+the command. These copy paste prompts
+just allow you to install all of them
+automatically. And as mentioned, you can
+jump across to this website, enter your
+first name and your email and hit the
+button, and you will get an email with a
+download link to the copy paste prompt,
+which I'll now show you. Okay, so we've
+got the code analyzer pack installation
+file open here. So again, if you do
+decide to download that file, this is
+what you'll get, which includes the copy
+paste prompt to instantly install all
+five commands on codec CLI. So you'll
+see here that it just says what's
+included in this pack. Five powerful
+commands for code analysis. Works with
+any coding language. Takes 30 seconds to
+set up and it's production ready. It's
+battle tested prompts with best
+practices built in. So I've already
+installed and used these and use them
+regularly and they work. So we can see
+here step one is to install all
+commands. All you need to do is copy the
+master installation prompt below and
+paste it into codec cli. This will
+create all five commands at once. So we
+can see here where this uh line 24 we
+can see markdown that's the start of the
+custom prompt for codeex create the
+following five custom slash commands in
+my codeex prompts directory. So again we
+talked earlier about global versus
+project level commands. This path here
+is the path for global commands. That's
+where you want codeex to create and
+install the custom slash commands if you
+want them available at the global level.
+And then we can see here we've got
+specifications on what needs to be
+built. So number one is the code
+review.mmd file. So every custom/comand
+that is built by codeex is stored in
+this prompts directory in a markdown
+file. So the name of the command is the
+name of the markdown file. In this case
+code-review.mmd
+is for the forward slash uh code review
+command. If we want to run that command,
+that's going to then access that code
+review markdown file for the
+instructions it needs in order to run
+that command. And you can see here we've
+then got code review command, which is
+the content that will live in this code
+review.mmarkdown file and instruct
+codeex what to do. Now, we've already
+seen the code review command in action,
+but let's scroll down and have a look at
+the other four commands that are in this
+pack. We've then got the second command
+which in this case is the security audit
+command and this instructs codeex to
+create the security- audit.mmarkdown
+file and add the following content to
+it. Perform a comprehensive security
+audit on the specified code. Scan for
+SQL injection vulnerabilities and so on.
+Output format for each issue found.
+Provide severity level, location,
+vulnerability type, risk explanation and
+so on. Target file directory is then
+dollar one. So again, we're specifying
+the first argument after the command is
+what we should review. We've then got
+the third file refactor finder. So
+again, this is an example you can look
+at if you want to create your own custom
+slash commands without using any of
+these packs. You just want to have a
+conversation with Codex and build your
+own. This is what you would do. You
+would ask it to create this file in the
+global prompts folder with whatever
+content you want. or you can even ask
+codec to just create your own rules and
+guidelines for whatever commands you
+want to build. That's the process for
+actually building it. It's simply a
+markdown file in that global prompts
+folder. That is what you need to do to
+install a custom slash command. So I
+won't run through all of these
+uh now, but as you can see, it's a copy
+paste job here. All we need to do is
+copy the full uh prompt there and paste
+it into codeex and it will install all
+of the commands. So we'll do that
+shortly. And you can see the prompt ends
+here with confirm all five commands have
+been created successfully. That's where
+the copy pasting ends. So from there
+above to the start of that prompt is
+what you want to copy and paste into
+codeex to build the commands. We can
+then see it moves on to step two,
+restart codeex. So anytime you install a
+custom/comand, you'll need to restart
+codeex before you can use it. What I'll
+do is I'll copy this prompt across to
+codeex. We'll paste it into our Codeex
+CLI session and we'll watch Codex
+install the prompt for us. So again, all
+you need to do is find here where it
+says markdown where the prompt starts.
+Create the following five custom slash
+commands. We want to copy all of this
+text
+uh down to the end of step one
+where we can see confirm all five
+commands have been created successfully.
+So we'll copy that. We'll jump back to
+Codeex and we'll send this prompt
+through.
+Okay, so we're back in Codeex now. I'm
+going to paste the prompt that we just
+copied across. Hit enter. And now Codex
+will work on installing these custom
+slash commands for us.
+And it's now finished creating the
+command. So you can see the response. It
+took 55 seconds to create all of those
+five custom slash commands. created the
+new prompts under the prompts folder,
+each matching the requested content
+blocks. All files verified after
+creation. No further steps needed unless
+you want to sync these to other
+machines. So now what we can do is test
+the commands. So again, if we use
+forward slash to look at the commands we
+have access to, we can't see the new
+ones yet because we need to first
+restart codeex. So we'll cancel this
+session. We'll start a new session. Now
+I'll hit forward slash. And if we want
+to bring up our custom commands, we want
+to first type in prompts. That's going
+to then bring up the list of custom
+commands that we have installed. And you
+can see that we now have code review,
+dependency check, generate tests,
+refactorinder, and security audit all
+available to us as commands. So we've
+already seen how the code review command
+works. For this video, I'm going to show
+you two more commands that are in this
+pack and how they work. Next, let's test
+the refactorinder command. So what we'll
+do is we'll run refactor finder and
+we'll ask it to analyze the entire code
+base in this directory for potential
+opportunities for refactoring and we'll
+see what result we get. Okay, so we can
+see it worked for 58 seconds. It's
+provided a summary. Total opportunities
+identified eight estimated technical
+debt about 6.5 developer days. Quick
+wins available three flattening
+validation flow consolidating discount
+tiers harmonizing HTTP client usage it's
+got critical issues what we should do
+first SQL injection and unsafe DB access
+uh and a recommendation secrets embedded
+and leaked via logs
+uh weak password hashing
+payment flow logs card numbers and fakes
+outcomes so so it's identified these
+critical issues in our codebase again
+this isn't a real project. It's just one
+I've set up for the purpose of this
+video. It's good that it's been able to
+identify these issues. We can see it's
+also identified some high priority
+issues and then some quick wins. And at
+the end of the response, it says, "Let
+me know if you want sample refactor
+sketches or help sequencing the work."
+So, a really good response here and an
+interesting one to use on projects
+you're working on. And as I said,
+especially for vibe coded projects where
+there's possibility that the code isn't
+um as sound as it could be, it's a good
+way to just double check and make sure
+that there's no potential issues or
+opportunities with the code base you're
+working with. And we can see here the
+summary is a really good summary here in
+terms of letting us know how many
+opportunities we have, what the
+technical debt is, and the quick wins
+that we can immediately work on. So
+that's an example of the refactorinder
+command. So finally, we'll just test the
+security audit command. So again, this
+is a really important one to run on all
+your projects, especially vibecoded
+projects, just to make sure that there
+are no security issues. We want to make
+sure there's no password leaks or API
+key leaks. So this is a really important
+command to use regularly to make sure
+that there are no security issues.
+Anytime you build a feature or create
+new files, you should really be running
+security audits to make sure that there
+are no issues. So, we'll hit enter here
+and Codeex will now do a security audit
+of this file that we've specified. In
+this case, orth broken.js. So, there are
+some security issues in this file that
+it should identify. We'll wait and see
+what it does with its response. We can
+see it's only taken 14 seconds for this
+one.
+and it has responded with quite a few
+issues.
+And we can scroll up to the top here and
+see the response is severity critical
+location.
+Uh it's telling us what lines of code in
+our file are the issues,
+vulnerability type, SQL injection, risk
+explanation, recommended fix, and it's
+got the code recommended to fix the
+issue. It then ends the response by
+saying let me know if you want help
+rewriting the module securely or adding
+automated secret scanning tests. So what
+we can do now as an example is pre
+please rewrite the module
+securely and it will now go ahead and
+fix that file. So it's identified the
+issues. We can now then follow up with
+codeex and say okay now fix the issues
+that you've identified and it will go
+ahead and and execute those tasks as
+well. So we can see codeex went ahead
+and fixed all of the issues that it
+identified. Now what we can do just to
+confirm that the issues are now fixed is
+we can run that command again
+on that file. So we're doing a security
+audit again on the updated version of
+the file. So now we should get a better
+response in terms of uh what issues it
+finds. It should actually now say there
+are no issues, but we'll see what
+response we get. So it's now completed
+the security audit of that same file now
+that it has implemented the fixes and we
+can see the response this time is no
+exploitable security vulnerabilities
+were identified after review. It's now
+talking about the highlights of the
+secure posture prevention tips are
+already in place. Let me know if you'd
+like additional defense in-depth
+measures.
+So we can clearly see here how this
+workflow is really effective. We've got
+a file that had serious critical
+security issues. The security audit
+identified those issues in the file. We
+then asked Codeex to fix the issues that
+it identified during that uh security
+audit. And now we've run that again and
+seen that the file is now robust and
+it's fixed and there are no security
+issues. So I haven't left codeex CLI for
+this entire workflow. And that's the
+power of custom slashcomands in in this
+case making sure that your code is
+secure. We've been able to review and
+fix the code within this single session.
+And I didn't need to write out any long-
+winded prompt for the security audit
+because that's already stored as an
+instruction as a custom slash command.
+So we can quite easily and quickly
+perform these security audits and
+similar commands on a wide range of
+files. Uh that's the power of custom
+slash commands. So that concludes this
+video on an introduction to
+custom/comands in Codex CLI. If you want
+to download and install the code
+analyzer pack, you can head over to
+snapperai.io/codex-prompt-
+packs. There you'll see this form where
+you just need to put in your first name
+and email and hit the button and you
+should get an email in your inbox with a
+link to download the markdown file that
+contains the copy paste installation
+prompt that we walked through. All you
+need to do is copy paste that into your
+Codex CLI session and that will
+instantly install all five commands.
+Alternatively, you can just start a
+conversation with Codex CLI and install
+your own prompts. So, you can just chat
+with Kodak CLI, tell it what you want,
+and it will help you install some custom
+slash commands. So, I hope you found
+that video valuable. Stay tuned and make
+sure you subscribe if you want to see
+more because I'm going to also do a
+video on the PRD wizard pack and show
+you how you can install that to automate
+the process of generating PRDs. There's
+a really powerful workflow that's built
+off the original PRD templates on my
+website that have been really popular.
+So, that's going to be a really
+interesting video. So, subscribe if you
+don't want to miss that and thanks for
+watching.

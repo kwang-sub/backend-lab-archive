@@ -1,0 +1,35 @@
+import { createServerClient } from "@supabase/ssr"
+import { cookies } from "next/headers"
+import { getSupabaseConfig } from "@/lib/supabase/config"
+
+type CookieToSet = {
+  name: string
+  value: string
+  options?: Record<string, unknown>
+}
+
+export async function createClient() {
+  const cookieStore = await cookies()
+  const { url, anonKey } = getSupabaseConfig()
+
+  return createServerClient(
+    url,
+    anonKey,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll()
+        },
+        setAll(cookiesToSet: CookieToSet[]) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options as never)
+            })
+          } catch {
+            // Server Component에서 setAll 호출 시 무시 (middleware에서 세션 갱신 처리)
+          }
+        },
+      },
+    },
+  )
+}
