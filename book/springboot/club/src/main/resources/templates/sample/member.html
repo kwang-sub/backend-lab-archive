@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.springframework.org/schema/security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>For MEMBER</h1>
+    <div sec:authorize="hasRole('USER')">Has USER Role</div>
+    <div sec:authorize="hasRole('MANAGER')">Has MANAGER Role</div>
+    <div sec:authorize="hasRole('ADMIN')">Has ADMIN Role</div>
+
+    <div sec:authorize="isAuthenticated()">
+        Only Authenticated user can see this text
+    </div>
+    Authenticated username:
+    <div sec:authentication="name"></div>
+    Authenticated user roles:
+    <div sec:authentication="principal.authorities"></div>
+
+</body>
+</html>
