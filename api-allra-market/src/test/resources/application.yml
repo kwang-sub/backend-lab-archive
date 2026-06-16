@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: api-allra-market
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        show_sql: true
+  datasource:
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:test;MODE=MariaDB;
+
+liquibase:
+  enabled: true
+  change-log: classpath:db/changelog/db.changelog-master.yaml
+
+app:
+  # TODO 토큰 암호화 키 별도 관리 필요
+  jwt:
+    secret: tatarhnoiahnqoasnifhbonreogyh15sdfgasdfasfgasdgaghbanbthqhqxzbarehnujozcxv1123
+  url:
+    payment: https://api-allra-payment.free.beeceptor.com

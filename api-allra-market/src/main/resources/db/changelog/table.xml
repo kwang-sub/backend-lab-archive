@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="/db/changelog/scripts/tbl/250204/20250204_create_customer_table.sql" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/scripts/tbl/250204/20250204_create_product_table.sql" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/scripts/tbl/250204/20250204_create_cart_table.sql" relativeToChangelogFile="false"/>
+
+    <include file="/db/changelog/scripts/tbl/250205/20250205_create_order_table.sql" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/scripts/tbl/250205/20250205_create_payment_log_table.sql" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/scripts/tbl/250205/20250205_add_column_payment_log.sql" relativeToChangelogFile="false"/>
+</databaseChangeLog>
