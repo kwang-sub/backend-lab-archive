@@ -1,0 +1,432 @@
+body {
+  font-family: 'Gothic A1', sans-serif;
+}
+/*
+ * Navbar
+ */
+header {
+  background-color: rgb(255, 236, 68);
+}
+.navbar-nav {
+  flex-direction: row;
+}
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .15);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .15);
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.search-bar button {
+	display: none;
+}
+
+#placeSearchCond {
+  flex: 0.2;
+  color: #000000;
+}
+
+footer {
+  background-color: #444;
+  min-height: 200px;
+  color: #fff;
+  padding: 3rem 0;
+}
+
+.sidemenu-top {
+	background-color: #ffc107;
+}
+.sidemenu-top li {
+	text-align: center;
+	border-left: 1px solid rgba(0,0,0,0.2);
+}
+.sidemenu-top li:first-child {
+	border-left: none;
+}
+.sidemenu-top li a {
+	padding: 30px 0;
+	width: 100%;
+	color: #000;
+	font-weight: bold;
+	font-size: 1.2rem;
+	text-decoration: none;
+	display: inline-block;
+}
+.sidemenu-list a {
+	text-decoration: none;
+	font-size: 1.1rem;
+	color: #000;
+}
+.sidemenu-memberinfo {
+	background-color: #ffc107;
+	padding: 30px 0;
+	border-bottom: 1px solid rgba(0,0,0,0.2); 
+}
+
+
+/* place */
+.place .card-title {
+  font-weight: bold;
+}
+.place .card-title a {
+  text-decoration: none;
+}
+.place-info {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.place-thumb {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.place-info li {
+  padding-right: 1.5rem;
+}
+.place-tag a {
+  text-decoration: none;
+}
+.place-tag {
+  position: relative;
+  z-index: 2;
+}
+.place-tag a:hover {
+  color: #fff;
+}
+
+/* card */
+.card-img-overlay {
+	background-color: rgba(0,0,0,0.2);
+}
+
+/* place view */
+/* 화면전체 */
+#main{
+    margin-left: 90px;
+    margin-right: 150px;
+}
+/* 캐러셀 */
+#carouselExampleControls{
+    width: 100%;
+    
+    
+}
+
+/* 날짜 시간예약 div */
+#datebox{
+    width: 300px;
+    /* height: 700px; */
+    /* margin-left : 60px; */
+    /* border: black 1px solid; */
+    /* align-items: center; */
+    /* padding-left: 25px; */
+}
+
+/* 라벨 디자인 */
+#datebox input[type=checkbox]+label{
+    border: 1px solid grey;
+    width: 45px;
+    height: 40px;
+    text-align: center;
+    margin-bottom: 0px;
+ }
+.no-checkbox{
+    border: 1px solid grey;
+    width: 45px;
+    height: 40px;
+    text-align: center;
+    background-color: rgb(218, 213, 213);
+    margin-bottom: 0px;
+}   
+
+
+ #datebox input[type=checkbox]:checked+label {
+    border: 1px solid grey;
+    width: 45px;
+    height: 40px;
+    text-align: center;
+    background-color: rgb(87, 103, 243);
+    margin-bottom: 0px;
+ }
+
+.stretched-link-block .btn {
+	position: relative;
+	z-index: 100;
+}
+
+
+/* 체크박스 안보이기 */
+input[name=checkbox]{
+     display: none;
+}
+/* 글내용 */
+#price{
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(97, 143, 243);
+}
+#btnLike{
+    float: right;
+}
+#list{
+    float: right;
+    margin-left: 15px;
+}
+
+#time{
+	width: 300px;
+}
+
+/* add place */
+.inputPic label {
+  display: inline-block;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 2rem;
+  background-origin: content-box;
+  padding-bottom: 2rem;
+  min-height: 181px;
+}
+
+.badge.tag {
+  cursor: pointer;
+  padding-left: 1.7rem;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: 5px 50% ;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="white" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"></path></svg>');
+
+}
+
+/*reservation*/
+
+.re-img{
+    width: 350px;
+    height: 300px;
+}
+.re-span{
+    display: inline-block;
+}
+.re-btn{
+    width: 200px;
+}
+#payment{
+    margin-left: 50px;
+}
+#title{
+    font-size: x-large;
+}
+#pay{
+    font-size: large;
+}
+#Price{
+    font-size: xx-large;
+}
+#reservationContent{
+    margin-left: 15px;
+    width: 500px;
+    height: 200px;
+}
+
+/*payComplete*/
+
+#pay-content{
+   margin: auto;
+   width: 700px;
+   height: 400px;
+   text-align: center;
+}
+#complete{
+    font-size: 35px;
+}
+.pay-a{
+    width: 300px;
+}
+
+/*chatList*/
+.chat-box > a:link { 
+	color: black; 
+      	text-decoration : none;
+}
+.chat-box > a:visited { 
+	color: black; 
+      	text-decoration : none;
+
+}
+.chat-box{
+    height: 150px;
+    width: 90%;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+.chat-box table{
+    margin-top: 15px;
+    width: 100%;
+    height: 80%;
+}
+.prople{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+.area{
+    height: 80px;
+    width: 80px;
+    margin-left: 15px;
+}
+.chatList-content{
+    padding-left: 20px;
+    height: 30px;
+    width: 650px;
+}
+.del-btn{
+    float: right;
+    margin-right: 15px;
+}
+.modal-btn{
+    width: 100px;
+}
+.modal-header{
+    margin-left: 110px; font-size: 30px; text-align: center;
+}
+#prople-td{
+	width: 50px;
+}
+
+/*chatView*/
+#header-left  a:link { 
+	color: black; 
+      	text-decoration : none;
+}
+#header-left  a:visited { 
+	color: black; 
+      	text-decoration : none;
+}
+.chatting-area{ 
+	margin:auto;
+	height: 600px;  
+	width : 750px;
+	margin-bottom: 50px;
+	margin-top : 50px;
+	border: 2px black solid;
+	border-radius: 10px;
+	margin-bottom: 15px;
+	}
+.display-chatting{
+       margin-top: 0px;
+	width: 100%;
+	height: 400px;
+	overflow: auto;
+	list-style : none;
+	padding : 10px 10px;
+	
+}
+
+.chat{
+	display: inline-block;
+	border-radius: 5px;
+	padding : 10px;
+	background-color: #eee;
+}
+
+
+.input-area{
+	margin:auto;
+	width : 750px;
+	display: flex;
+}
+
+#inputChatting{
+	height: 50px;
+	width : 90%;
+	resize : none;
+	border-radius: 10px;
+}
+
+.myChat{
+	text-align: right;
+}
+
+.myChat > p{
+	background-color: rgb(66,133,244);
+	color: white;
+}
+
+.chatDate{
+	font-size: 9px;
+}
+#chat-header{
+    border-bottom: black 1px solid;
+    width: 100%;
+	height: 130px;
+	padding : 10px 10px;
+	      margin-left: 0px;
+	line-height: 100px;
+}
+
+#chat-header div{
+    height: 100%;
+}
+#chat-content{
+    border: black 1px solid;
+    border-radius: 10px;
+    line-height: 50px;
+}
+table img{
+    height: 90px;
+    width: 70px;
+
+}
+.td{
+    padding-left: 15px;
+}
+#name{
+    padding-left: 25px; 
+    font-size: 30px;
+}
+#send{
+	background-color: white;
+	width: 50px;
+	height: 50px;
+	margin-left: 15px;
+	border: none;
+}
+#send img{
+	width: 100%;
+	height: 100%;
+}
+.bi-cursor{
+	font-size: 2em;
+}
+.bi-arrow-left{
+	margin-top: 50px;
+	font-size: 3em;
+}
+#header-left img {
+	width: 80px;
+	height: 80px;
+}

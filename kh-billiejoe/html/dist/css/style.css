@@ -1,0 +1,104 @@
+body {
+  font-family: 'Gothic A1', sans-serif;
+}
+/*
+ * Navbar
+ */
+header {
+  background-color: rgb(255, 236, 68);
+}
+.navbar-nav {
+  flex-direction: row;
+}
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .15);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .15);
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+#placeSearchCond {
+  flex: 0.2;
+  color: #000000;
+}
+
+footer {
+  background-color: #444;
+  min-height: 200px;
+  color: #fff;
+  padding: 3rem 0;
+}
+
+/* place */
+.place .card-title {
+  font-weight: bold;
+}
+.place .card-title a {
+  text-decoration: none;
+}
+.place-info {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.place-thumb {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.place-info li {
+  padding-right: 1.5rem;
+}
+.place-tag a {
+  text-decoration: none;
+}
+.place-tag {
+  position: relative;
+  z-index: 2;
+}
+.place-tag a:hover {
+  color: #fff;
+}
+
+/* add place */
+.inputPic label {
+  display: inline-block;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 2rem;
+  background-origin: content-box;
+  padding-bottom: 2rem;
+  min-height: 181px;
+}
+
+.badge.tag {
+  cursor: pointer;
+  padding-left: 1.7rem;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: 5px 50% ;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="white" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"></path></svg>');
+
+}

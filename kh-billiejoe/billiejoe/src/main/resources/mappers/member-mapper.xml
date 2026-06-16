@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+	
+	<resultMap type="Member" id="member_rm">
+		<id property="memberNo" column="MEMBER_NO" />
+
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPw" column="MEMBER_PW" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberPhone" column="MEMBER_PHONE" />
+		<result property="memberPic" column="MEMBER_PIC" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="memberStatus" column="MEMBER_STATUS" />
+		<result property="memberIsAdmin" column="MEMBER_IS_ADMIN" />
+
+	</resultMap>
+	
+		<!-- 내가 예약한 장소 목록 상세조회 resultMap -->
+	<resultMap type="MyReservation" id="myReservation_rm">
+		
+		<id property="reserveNo" column="RESERVE_NO"/>
+		
+		<result property="useDate" column="RESERVE_USE_DATE"/>
+		<result property="useStart" column="RESERVE_USE_START"/>
+		<result property="useEnd" column="RESERVE_USE_END"/>
+		<result property="reserveDate" column="RESERVE_DATE"/>
+		<result property="placeNo" column="PLACE_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="stateNo" column="STATE_NO"/>
+		<result property="stateName" column="STATE_NAME"/>
+
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberPhone" column="MEMBER_PHONE"/>
+		
+		<result property="placeName" column="PLACE_NAME" />
+		<result property="placeSummary" column="PLACE_SUMMARY"/>
+		<result property="placeAddr" column="PLACE_ADDR" />
+		<result property="placeContent" column="PLACE_CONTENT"/>
+		<result property="placeCharge" column="PLACE_CHARGE" />
+		<result property="placeDate" column="PLACE_DATE" />
+		<result property="likeCount" column="LIKE_COUNT" />
+		<result property="reviewCount" column="REVIEW_COUNT" />
+		
+		
+		
+		 <collection property="atList" column="PLACE_NO" javaType="java.util.ArrayList" ofType="Attachment" select="selectAttachment"/>
+		 <collection property="tagList" column="PLACE_NO" javaType="java.util.ArrayList" ofType="Tag" select="selectTag"/>
+	
+	</resultMap>
+	
+	
+	<resultMap type="Tag" id="tag_rm">
+		<id property="tagNo" column="TAG_NO"/>
+		<result property="tagName" column="TAG_NAME"/>
+		<result property="placeNo" column="PLACE_NO"/>
+	</resultMap>
+	
+		<!-- 파일 정보 조회용 resultMap -->
+	<resultMap type="Attachment" id="attachment_rm">
+		<id property="fileNo" column="FILE_NO"/>
+		
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="boardNo" column="BOARD_NO"/>
+	</resultMap>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="string" resultMap="member_rm">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_STATUS = 'Y'
+		AND MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
+	<!-- 이메일(ID) 중복 검사 -->
+	<select id="emailDupCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE MEMBER_STATUS = 'Y'
+		AND MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
+	<!-- 회원 가입 -->
+	<insert id="signUp" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES( SEQ_USER.NEXTVAL, #{memberEmail}, #{memberPw}, #{memberName},
+				#{memberPhone}, #{memberPic}, DEFAULT, DEFAULT, DEFAULT )
+	</insert>
+	
+	<!-- 현재 비밀번호 조회-->
+	<select id="selectPassword" parameterType="_int" resultType="string">
+		SELECT MEMBER_PW FROM MEMBER
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+
+	<!-- 회원탈퇴 -> 비번, 전화번호, 프로필사진은 임의로 변경하고 회원상태는 'N' 아이디와 이름은 기록 -->
+	<update id="secession" parameterType="_int">
+		UPDATE MEMBER SET  
+		MEMBER_PW = 'secession_pw',
+		MEMBER_PHONE ='010-0000-0000',
+		MEMBER_PIC = DEFAULT,
+		MEMBER_STATUS = 'N'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 탈퇴 회원 목록 추가 -->
+	<insert id="secessionInsert" parameterType="Member">
+		INSERT INTO UNREG_MEMBER
+		VALUES( #{memberNo}, #{memberEmail}, DEFAULT, #{memberName},
+				DEFAULT, DEFAULT, #{regDate}, DEFAULT, DEFAULT )
+	</insert>
+	
+	<!-- 탈퇴 예정 회원 예약건 조회 -->
+	<select id="selectReservation" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM RESERVATION
+		WHERE MEMBER_NO = #{memberNo}
+		AND (STATE_NO = 1 OR STATE_NO = 2)
+	</select>
+	
+	<!-- 회원정보 수정  -->
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER SET
+		MEMBER_NAME = #{memberName},
+		MEMBER_PHONE = #{memberPhone}
+		<if test="memberPic != null">
+			, MEMBER_PIC = #{memberPic}
+		</if>
+		WHERE MEMBER_NO = #{memberNo}
+	
+	</update>
+	
+		<!-- 회원 비밀번호 변경 -->
+	<update id="changePwd" parameterType="Member">
+		UPDATE MEMBER SET
+		MEMBER_PW = #{memberPw}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	
+	<!-- 태그조회(게시글상세) -->
+	<select id="selectTag" parameterType="_int" resultMap="tag_rm">
+		SELECT TAG_NAME FROM PLACE_TAG_VIEW WHERE PLACE_NO = #{placeNo}
+	</select>
+	<!-- 업로드된 이미지 조회 -->
+	<select id="selectAttachment" parameterType="_int" resultMap="attachment_rm">
+		SELECT * FROM ATTACHMENT WHERE PLACE_NO = #{placeNo} ORDER BY FILE_LEVEL
+	</select>
+	
+	
+	
+	<!-- 이용 예정인 공간 조회 -->
+	<select id="selectLatestPlace" parameterType="_int" resultMap="myReservation_rm">
+		SELECT * FROM (
+			SELECT place_no, place_name, place_summary, place_charge, R.member_no, file_name, like_count, review_count, reserve_use_date
+			FROM place_list P
+			JOIN reservation R USING(place_no)
+			WHERE R.member_no = #{memberNo}
+			AND reserve_use_date >= SYSDATE
+			ORDER BY reserve_use_date
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	
+	<!-- 내 장소에 예약된 공간 조회 -->
+	<select id="selectReservedPlace" parameterType="_int" resultMap="myReservation_rm">
+	SELECT A.PLACE_NO, RESERVE_USE_DATE,RESERVE_USE_START, RESERVE_USE_END,STATE_NAME, A.MEMBER_NO,
+	            MEMBER_NAME,MEMBER_PHONE, PLACE_CHARGE,PLACE_NAME
+	FROM RESERVATION A
+	JOIN RESERVATION_STATE USING (STATE_NO)
+	JOIN MEMBER B ON (A.MEMBER_NO = B.MEMBER_NO)
+	JOIN PLACE C ON (A.PLACE_NO = C.PLACE_NO)
+	WHERE A.PLACE_NO IN (SELECT PLACE_NO FROM PLACE
+	                                WHERE MEMBER_NO = #{memberNo})
+	AND A.RESERVE_USE_DATE >= SYSDATE
+	AND ROWNUM &lt;= 5
+	ORDER BY RESERVE_USE_DATE
+	</select>
+	
+</mapper>

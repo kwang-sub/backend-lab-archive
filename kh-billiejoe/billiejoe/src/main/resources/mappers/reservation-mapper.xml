@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reservationMapper">
+	<resultMap type="BookedReservation" id="booked_rm">
+		<id property="reserveNo" column="reserve_no"/>
+		<result property="useDate" column="reserve_use_date"/>
+		<result property="useStart" column="reserve_use_start"/>
+		<result property="useEnd" column="reserve_use_end"/>
+		<result property="reserveDate" column="reserve_date"/>
+		<result property="stateNo" column="state_no"/>
+		<result property="stateName" column="state_name"/>
+		<result property="guestNo" column="guest_member_no"/>
+		<result property="guestName" column="guest_member_name"/>
+		<result property="guestPhone" column="guest_member_phone"/>
+		<result property="placeNo" column="place_no"/>
+		<result property="placeName" column="place_name"/>
+		<result property="hostNo" column="host_member_no"/>
+		<result property="hostName" column="host_member_name"/>
+	</resultMap>
+	
+	<!-- 예약 접수 수 조회 -->
+	<select id="selectBookedListCount" parameterType="_int" resultType="_int">
+	SELECT COUNT(*) FROM(
+		SELECT * 
+		FROM (
+		    SELECT 
+		    reserve_no, reserve_use_date, reserve_use_start, reserve_use_end, reserve_date, 
+		    state_no, state_name,
+		    member_no AS guest_member_no, member_name AS guest_member_name, member_phone AS guest_member_phone,
+		    place_no
+		    FROM reservation
+		    JOIN reservation_state USING(state_no)
+		    JOIN member USING(member_no)
+		) JOIN (
+		        SELECT
+		        place_no, place_name, member_no AS host_member_no, member_name AS host_member_name
+		        FROM place
+		        JOIN member USING(member_no)
+		    ) USING(place_no)
+		WHERE host_member_no = #{member_no})
+	</select>
+	
+	<!-- 예약 접수 내역 조회 -->
+	<select id="selectBookedList" parameterType="_int" resultMap="booked_rm">
+		SELECT * 
+		FROM (
+		    SELECT 
+		    reserve_no, reserve_use_date, reserve_use_start, reserve_use_end, reserve_date, 
+		    state_no, state_name,
+		    member_no AS guest_member_no, member_name AS guest_member_name, member_phone AS guest_member_phone,
+		    place_no
+		    FROM reservation
+		    JOIN reservation_state USING(state_no)
+		    JOIN member USING(member_no)
+		) JOIN (
+		        SELECT
+		        place_no, place_name, member_no AS host_member_no, member_name AS host_member_name
+		        FROM place
+		        JOIN member USING(member_no)
+		    ) USING(place_no)
+		WHERE host_member_no = #{member_no}
+		ORDER BY reserve_no DESC
+	</select>
+</mapper>

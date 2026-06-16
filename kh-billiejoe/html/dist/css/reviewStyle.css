@@ -1,0 +1,148 @@
+/* 내가 작성한 후기 목록 조회 */
+.listform{
+  height: auto;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  border: 2px solid grey;
+  border-radius: 30px; 
+}
+
+.imgArea{
+  border: 2px solid lightgrey;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 30px; 
+}
+
+.imgArea > img{
+  width:250px;
+	height: 225px;
+	object-fit: cover;
+}
+
+.reviewDate{
+  margin-bottom: 10px;
+}
+
+.listPlace{
+  font-size: 30px;
+}
+
+.div-inline{
+  display: inline-block;
+}
+
+.listRate{
+  margin-right: 20px;
+}
+
+.listContent{
+	height: 70px;
+	overflow: hidden;
+}
+  
+.listBtnArea{
+  margin-bottom: 12px;
+}
+
+.listBtn{
+	width: 100px;
+	height: 32px;
+	margin-top: 12px;
+	margin-right: 20px;
+}
+
+.star i {
+  color: gray;
+  font-size: 30px;
+}
+
+#gold {
+  color: #FFD700;
+}
+
+.pagination {
+  justify-content: center;
+}
+
+/* review 상세조회 */
+
+.placeDate{
+  margin-top: 10px;
+}
+
+.viewAvgRate{
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.profile > img{
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  position: relative;
+  border-radius: 50%;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+/* review 후기 작성 */
+.contentInsert{
+  height: 300px;
+}
+
+	#star a {
+		text-decoration: none;
+		color: gray;
+    font-size: 30px;
+	}
+
+	#star a.on {
+		color: #FFD700;
+	}
+
+	.star{
+		border-radius: 5px;
+	}
+
+  .btnArea{
+    margin-top: 20px;
+  }
+
+  /* 장소 후기 목록 조회 */
+  
+  .reviewLine{
+    margin: 10px;
+    padding: 15px;
+    border-radius: 30px;
+  }
+  
+  .pl{
+    margin-left: 10px;
+  }
+  .placeProfile {
+    overflow: hidden;
+  }
+  
+  .placeProfile > img{
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    position: relative;
+    border-radius: 50%;
+  }
+
+  .place {
+    --bs-gutter-x:0;
+  }
+
+  .avgRate > p{
+    margin-bottom: 0px;
+  }
+
+  .placeContent{
+    height: 100px;
+    overflow: hidden;
+  }

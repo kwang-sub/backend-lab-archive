@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="placeMapper">
+	<!-- 파일 정보 조회용 resultMap -->
+	<resultMap type="Attachment" id="attachment_rm">
+		<id property="fileNo" column="FILE_NO"/>
+		
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="placeNo" column="PLACE_NO"/>
+	</resultMap>
+	
+	<!-- place 조회용 resultMap -->
+	<resultMap type="Place" id="place_rm">
+		<id property="placeNo" column="PLACE_NO"/> 
+
+		<result property="placeName" column="PLACE_NAME" />
+		<result property="placeSummary" column="PLACE_SUMMARY"/>
+		<result property="placeAddr" column="PLACE_ADDR" />
+		<result property="placeContent" column="PLACE_CONTENT"/>
+		<result property="placeCharge" column="PLACE_CHARGE" />
+		<result property="placeDate" column="PLACE_DATE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="likeCount" column="LIKE_COUNT" />
+		
+		<collection property="atList" column="PLACE_NO" javaType="java.util.ArrayList" ofType="Attachment" select="selectAttachment"/>
+		<collection property="tagList" column="PLACE_NO" javaType="java.util.ArrayList" ofType="Tag" select="selectTag"/>
+	</resultMap>
+	
+	<!-- place 목록용 resultMap -->
+	<resultMap type="Place" id="place_list_rm">
+		<id property="placeNo" column="PLACE_NO"/> 
+		<result property="placeName" column="PLACE_NAME" />
+		<result property="placeSummary" column="PLACE_SUMMARY"/>
+		<result property="placeAddr" column="PLACE_ADDR" />
+		<result property="placeContent" column="PLACE_CONTENT"/>
+		<result property="placeCharge" column="PLACE_CHARGE" />
+		<result property="placeDate" column="PLACE_DATE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="likeCount" column="LIKE_COUNT" />
+		<result property="thumbnail" column="FILE_NAME" />
+		<result property="reviewCount" column="REVIEW_COUNT" />
+		
+		<collection property="tagList" column="PLACE_NO" javaType="java.util.ArrayList" ofType="Tag" select="selectPlaceTagList"/>
+	</resultMap>
+	
+	<!-- 예약가능시간 확인resultMap -->
+	<resultMap type="PlaceAvailable" id="placeAvailable_rm">
+		<id property="availableNo" column="AVAILABLE_NO"/>
+		
+		<result property="placeNo" column="PLACE_NO"/>
+		<result property="start" column="AVAILABLE_START"/>
+		<result property="end" column="AVAILABLE_END"/>
+	</resultMap>
+	
+	<!--예약되어있는 시간 확인 resultMap  -->
+	<resultMap type="Reservation" id="reservation_rm">
+		<id property="reserveNo" column="RESERVE_NO"/>
+		
+		<result property="useDate" column="RESERVE_USE_DATE"/>
+		<result property="useStart" column="RESERVE_USE_START"/>
+		<result property="useEnd" column="RESERVE_USE_END"/>
+		<result property="reserveDate" column="RESERVE_DATE"/>
+		<result property="placeNo" column="PLACE_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="stateNo" column="STATE_NO"/>
+	</resultMap>
+	
+	<!-- 태그 resultMap -->
+	<resultMap type="Tag" id="tag_rm">
+		<id property="tagNo" column="TAG_NO"/>
+		<result property="tagName" column="TAG_NAME"/>
+		<result property="placeNo" column="PLACE_NO"/>
+	</resultMap>
+	
+	<!-- 내가 예약한 장소 목록 상세조회 resultMap -->
+	<resultMap type="MyReservation" id="myReservation_rm">
+		<id property="reserveNo" column="RESERVE_NO"/>
+		
+		<result property="useDate" column="RESERVE_USE_DATE"/>
+		<result property="useStart" column="RESERVE_USE_START"/>
+		<result property="useEnd" column="RESERVE_USE_END"/>
+		<result property="reserveDate" column="RESERVE_DATE"/>
+		<result property="placeNo" column="PLACE_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="stateNo" column="STATE_NO"/>
+		<result property="stateName" column="STATE_NAME"/>
+		
+		<result property="placeName" column="PLACE_NAME" />
+		<result property="placeSummary" column="PLACE_SUMMARY"/>
+		<result property="placeAddr" column="PLACE_ADDR" />
+		<result property="placeContent" column="PLACE_CONTENT"/>
+		<result property="placeCharge" column="PLACE_CHARGE" />
+		<result property="placeDate" column="PLACE_DATE" />
+		<result property="likeCount" column="LIKE_COUNT" />
+		
+
+		<collection property="atList" column="PLACE_NO" javaType="java.util.ArrayList" ofType="Attachment" select="selectAttachment"/>
+		  <collection property="tagList" column="PLACE_NO" javaType="java.util.ArrayList" ofType="Tag" select="selectTag"/>
+	
+	</resultMap>
+	
+	<!-- 좋아요 확인 -->
+	<select id="likeCheck" parameterType="_int" resultType="_Int">
+		SELECT COUNT(*) FROM LIKES WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 태그조회(게시글상세) -->
+	<select id="selectTag" parameterType="_int" resultMap="tag_rm">
+		SELECT TAG_NAME FROM PLACE_TAG_VIEW WHERE PLACE_NO = #{placeNo}
+	</select>
+	<!-- 업로드된 이미지 조회 -->
+	<select id="selectAttachment" parameterType="_int" resultMap="attachment_rm">
+		SELECT * FROM ATTACHMENT WHERE PLACE_NO = #{placeNo} ORDER BY FILE_LEVEL
+	</select>
+	
+	<!-- 게시글 상세조회 (수정예정)  -->	
+	<select id="placeView" parameterType="_int" resultMap="place_rm">
+		SELECT * FROM PLACE_VIEW
+		WHERE PLACE_NO = #{placeNo} AND PLACE_IS_AVAILABLE = 'Y' AND PLACE_STATUS = 'Y'
+	</select>
+	<!-- 판매자가 지정한 예약시간가능 얻어오기 -->
+	<select id="getAvailable" parameterType="_int" resultMap="placeAvailable_rm">
+		SELECT * FROM PLACE_AVAILABLE WHERE PLACE_NO = #{placeNo}
+	</select>
+	<!-- 장소 해당날짜 예약가능시간 얻어오기 -->
+	<select id="getTimeList" parameterType="Reservation" resultMap="reservation_rm">
+		SELECT * FROM RESERVATION WHERE PLACE_NO = #{placeNo} AND RESERVE_USE_DATE= #{useDate}
+	</select>
+	<!-- 좋아요 추가하기 -->
+	<insert id="insertLike" parameterType="Likes">
+		INSERT INTO LIKES VALUES(#{memberNo},#{placeNo},DEFAULT)
+	</insert>
+	<!-- 좋아요 삭제하기 -->
+	<delete id="deleteLike" parameterType="Likes">
+		DELETE LIKES WHERE MEMBER_NO = #{memberNo} AND PLACE_NO = #{placeNo}
+	</delete>
+
+	<!-- 검색 장소 수 조회 -->
+	<select id="getListCount" parameterType="Search" resultType="_int">
+		SELECT COUNT(*) FROM place_list 
+		<if test="cond == 'tag'">
+			JOIN place_tag USING(place_no)
+			JOIN tag USING(tag_no)
+		</if>
+		WHERE place_status = 'Y'
+	  <if test="q neq null">
+	  	AND
+	  	<bind name="val" value="'%' + q + '%'"/>
+	  	<choose>
+	  		<when test="cond == 'name'">
+	  			place_name LIKE #{val}
+	  		</when>
+	  		<when test="cond == 'addr'">
+	  			place_addr LIKE #{val}
+	  		</when>
+	  		<when test="cond == 'tag'">
+	  			tag_name LIKE #{q}
+	  		</when>
+	  		<when test="cond == 'member'">
+	  			member_no LIKE #{q}
+	  		</when>
+	  	</choose>
+	  </if>
+	</select>
+	
+	<!-- 검색 장소 목록 조회 -->
+	<select id="selectPlaceList" parameterType="Search" resultMap="place_list_rm">
+		SELECT * FROM place_list
+		<if test="cond == 'tag'">
+			JOIN place_tag USING(place_no)
+			JOIN tag USING(tag_no)
+		</if>
+		WHERE place_status = 'Y'
+	  <if test="q neq null">
+	  	AND
+	  	<bind name="val" value="'%' + q + '%'"/>
+	  	<choose>
+	  		<when test="cond == 'name'">
+	  			place_name LIKE #{val}
+	  		</when>
+	  		<when test="cond == 'addr'">
+	  			place_addr LIKE #{val}
+	  		</when>
+	  		<when test="cond == 'tag'">
+	  			tag_name LIKE #{q}
+	  		</when>
+	  		<when test="cond == 'member'">
+	  			member_no LIKE #{q}
+	  		</when>
+	  	</choose>
+	  </if>
+		ORDER BY place_no DESC
+	</select>
+	
+	<!-- 지역 목록 선택 -->
+	<select id="selectPlaceAddrList" resultMap="place_list_rm">
+		SELECT place_addr FROM place_list ORDER BY place_addr
+	</select>
+	
+	<!-- 장소 추가 -->
+	<insert id="insertPlace" parameterType="Place" useGeneratedKeys="true">
+		<selectKey keyProperty="placeNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_PLACE.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO place VALUES(#{placeNo}, #{placeName}, #{placeSummary}, #{placeAddr}, #{placeContent}, #{placeCharge}, DEFAULT, DEFAULT, DEFAULT, #{memberNo})
+	</insert>
+	
+	<!-- 장소 수정 -->
+	<update id="updatePlace" parameterType="Place">
+		UPDATE place 
+		SET 
+		place_name = #{placeName}, place_summary = #{placeSummary}, place_addr = #{placeAddr},
+		place_content = #{placeContent}, place_charge = #{placeCharge}
+		WHERE place_no = #{placeNo} AND member_no = #{memberNo}
+	</update>
+	
+	<!-- 이용 가능 시간 삽입 -->
+	<insert id="insertPlaceAvailable" parameterType="PlaceAvailable">
+		INSERT INTO place_available VALUES(SEQ_AVAILABLE.NEXTVAL, #{placeNo}, #{start}, #{end})
+	</insert>
+	
+	<!-- 이용 가능 시간 수정 -->
+	<insert id="updatePlaceAvailable" parameterType="PlaceAvailable">
+		UPDATE place_available SET available_start = #{start}, available_end = #{end} WHERE place_no = #{placeNo}
+	</insert>
+	
+	<!-- 이미지 정보 추가 -->
+	<insert id="insertAttachmentList" parameterType="list">
+		INSERT INTO attachment
+		SELECT SEQ_FILE.NEXTVAL, A.* FROM (
+			<foreach collection="list" item="at" separator="UNION ALL">
+				SELECT #{at.filePath} file_path, #{at.fileName} file_name, #{at.fileLevel} file_level, #{at.placeNo} place_no FROM DUAL
+			</foreach>
+		) A
+	</insert>
+	
+	<!-- 태그 존재 여부 확인 -->
+	<select id="isExistTag" parameterType="string" resultType="Tag">
+		SELECT tag_no as "tagNo", tag_name as "tagName" FROM tag WHERE tag_name = #{tagItem}
+	</select>
+
+	<!-- 태그 삽입 -->
+	<insert id="insertTag" parameterType="string">
+		INSERT INTO tag VALUES(seq_tag.NEXTVAL, #{tagItem})
+	</insert>
+	
+	<!-- 장소에 태그 정보 삽입 -->
+	<insert id="insertPlaceTags" parameterType="placeTag">
+		INSERT INTO place_tag VALUES(#{placeNo}, #{tagNo})
+	</insert>
+	
+	<!-- 장소에 삽입된 태그 조회 -->
+	<select id="selectPlaceTagList" parameterType="_int" resultMap="tag_rm">
+		SELECT * FROM place_tag JOIN tag USING(tag_no) WHERE place_no = #{placeNo}
+	</select>
+	
+	<!-- 장소에 삽입된 태그 모두 삭제 -->
+	<select id="deleteAllPlaceTag" parameterType="_int">
+		DELETE * FROM place_tag WHERE place_no = #{placeNo}
+	</select>
+	
+	<!-- 장소 이미지 조회 -->
+	<select id="selectPlaceAttachment" parameterType="_int" resultMap="attachment_rm">
+		SELECT * FROM attachment WHERE place_no = #{placeNo}
+	</select>
+
+	<select id="getReserveNo" resultType="_int">
+		SELECT SEQ_RESERVE.NEXTVAL FROM DUAL
+	</select>
+	<insert id="insertReservation" parameterType="Reservation">
+		INSERT INTO RESERVATION VALUES (#{reserveNo},#{useDate},#{useStart},#{useEnd},DEFAULT,#{placeNo},#{memberNo},1)
+	</insert>
+	<insert id="insertPayment" parameterType="Payment">
+		INSERT INTO PAYMENT VALUES(SEQ_PAY.NEXTVAL, #{reserveNo},#{payAmount},'kakaoPay',DEFAULT,#{memberNo},#{merchantUid})
+	</insert>
+	
+	<!-- 내가 예약한 장소 목록 -->
+	<select id="getReListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM RESERVATION
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	
+	<!-- 내가 좋아요한 장소 목록 -->
+	<select id="getLikeListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM LIKES
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 내가 좋아요한 장소 -->
+	<select id="selectMyLikePlaceList"  parameterType="_int" resultMap="myReservation_rm" >
+		SELECT * FROM place_list P JOIN likes L USING(place_no) 
+		WHERE L.member_no = #{memberNo} ORDER BY liked_date DESC
+	</select>
+	
+	<!-- 내가 예약한 장소 -->
+	<select id="selectReservationList" parameterType="_int" resultMap="myReservation_rm">
+	SELECT RESERVE_NO, RESERVE_DATE, RESERVE_USE_DATE, RESERVE_USE_START,RESERVE_USE_END,PLACE_NO,A.MEMBER_NO,STATE_NO,STATE_NAME,PLACE_NAME,PLACE_CHARGE,PLACE_ADDR
+	FROM RESERVATION A
+	JOIN RESERVATION_STATE USING (STATE_NO)
+	JOIN PLACE USING (PLACE_NO)
+	WHERE A.MEMBER_NO = #{memberNo}
+	</select>
+
+	<!-- 예약 상세보기  -->
+	<select id="getReservation" parameterType="_int" resultMap="myReservation_rm">
+		SELECT * 
+		FROM RESERVATION
+		JOIN PLACE USING(PLACE_NO)
+		JOIN RESERVATION_STATE USING(STATE_NO)
+		WHERE RESERVE_NO = #{reserveNo}
+	</select>
+	<!-- 예약 취소 -->
+	<update id="cancelRv" parameterType="_int">
+		UPDATE RESERVATION SET STATE_NO = 4 WHERE RESERVE_NO = #{reserveNo}
+	</update>
+	<!-- 예약상태 이용완료 -->
+	<update id="completReservation" parameterType="hashmap">
+		UPDATE RESERVATION SET STATE_NO = 3 WHERE RESERVE_USE_DATE &lt; #{today} OR (RESERVE_USE_DATE =#{today} AND RESERVE_USE_END &lt;=#{time})
+	</update>
+	<!-- 예약상태 이용중 -->
+	<update id="startReservation" parameterType="hashmap">
+		UPDATE RESERVATION SET STATE_NO = 2 WHERE RESERVE_USE_DATE = #{today} AND RESERVE_USE_START = #{time}
+	</update>
+	
+	<!-- 내가 예약한 장소(정렬 추가) -->
+	<select id="selectReservationSortList" parameterType="map" resultMap="myReservation_rm">
+	    SELECT * FROM(
+	        SELECT RESERVE_NO, RESERVE_DATE, RESERVE_USE_DATE, RESERVE_USE_START,RESERVE_USE_END,PLACE_NO,A.MEMBER_NO,STATE_NO,STATE_NAME,PLACE_NAME,PLACE_CHARGE,PLACE_ADDR
+	        , '1' DT
+	        FROM RESERVATION A
+	        JOIN RESERVATION_STATE USING (STATE_NO)
+	        JOIN PLACE USING (PLACE_NO)
+	        WHERE A.MEMBER_NO = #{memberNo}
+	        AND TO_DATE(RESERVE_USE_DATE, 'RRRR-MM-DD') - SYSDATE > 0
+	        
+	        UNION ALL
+	        
+	        SELECT RESERVE_NO, RESERVE_DATE, RESERVE_USE_DATE, RESERVE_USE_START,RESERVE_USE_END,PLACE_NO,A.MEMBER_NO,STATE_NO,STATE_NAME,PLACE_NAME,PLACE_CHARGE,PLACE_ADDR
+	        , '0' DT
+	        FROM RESERVATION A
+	        JOIN RESERVATION_STATE USING (STATE_NO)
+	        JOIN PLACE USING (PLACE_NO)
+	        WHERE A.MEMBER_NO = #{memberNo}
+	        AND TO_DATE(RESERVE_USE_DATE, 'RRRR-MM-DD') - SYSDATE &lt;= 0 
+	    )
+	    
+	    <choose>
+	    	<when test="sort == 'uploadDate'">
+	    		ORDER BY PLACE_NO DESC
+	    	</when>
+	    	<when test="sort == 'reservatioinDate'">
+	    		ORDER BY RESERVE_DATE DESC
+	    	</when>
+	    	<when test="sort == 'useDate'">
+	    		ORDER BY DT DESC, TO_DATE(RESERVE_USE_DATE, 'RRRR-MM-DD') - SYSDATE
+	    	</when>
+	    </choose>
+	<choose>
+	
+	</choose>
+	</select>
+
+	
+</mapper>
+

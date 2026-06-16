@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>billieJoe</title>
+	  <!-- Google Webfonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <!-- Default Style -->
+  <link href="../dist/css/style.css" rel="stylesheet">
+  <link href="../dist/css/reviewStyle.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+  <!-- // header.jsp -->
+  <header class="sticky-top shadow">
+    <nav class="navbar navbar-light flex-md-nowrap p-0 container">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">billieJoe</a>
+      <div class="input-group">
+        <select class="form-select form-control-dark" id="placeSearchCond">
+          <option value="1" selected>장소명</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <input class="form-control form-control-dark" type="text" placeholder="Search">
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="#">로그인</a>
+        </li>
+        <li class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="#">회원가입</a>
+        </li>
+      </ul>
+      <button class="navbar-toggler me-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" type="button"><span
+          class="navbar-toggler-icon"></span></button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          대충 메뉴 들어가는 부분
+        </div>
+      </div>
+    </nav>
+  </header>
+    <!-- 본문 시작 -->
+  <!-- 각 페이지의 jsp 파일은 header와 footer를 제외한 본문만 남겨서 작성해주세요. (이클립스에서 보여주는 빨간줄 표시는 무시하셔도 됩니다.) -->
+  <!-- !!! 강사님은 알아서 합쳐주니 괜찮다고 하셨지만 세 부분으로 나누어 졌을 때 겹치는 곳이 없고 셋이 합쳐 하나의 완성된 html 파일이 되도록 include 되어야 합니다 !!! -->
+  <div class="container py-5">
+    <hr>
+    <div class="row viewWrapper">
+       <div class="col-3 profile content">
+         <img src="../member/image_sample/sample1.jpg">
+       </div>
+
+       <div class="col-9 content">
+         
+          <div class="row placeDate">
+            <h3>모임공간 모락 서울대입구</h3>
+            <p>작성일&nbsp; : &nbsp;2021/ 07 /12</p>
+          </div>
+
+          <div class="row rate">
+            <div class="col-1 viewAvgRate">
+              <p>평점/5&nbsp;</p>
+            </div>
+            
+            <div class="col-11">
+              <p class="star">
+                <c:when test="${review.reviewRate == 5}">
+                  <i id="gold">★</i>
+                  <i id="gold">★</i>
+                  <i id="gold">★</i>
+                  <i id="gold">★</i>
+                  <i id="gold">★</i>
+                </c:when>
+            </div>
+        </div>
+          <hr>
+          <div class="content">
+            서울대 입구 모임공간 모락에서는 이것저것 많은 보드게임이 준비되어있었다.
+            다른 게임방에서 보기 힘든 여러가지 플스 게임도 있었고 음료도 충분히 많이 주셨다. 
+            특히 아이스라떼가 정말 맛있었다.
+            서울대 입구 모임공간 모락에서는 이것저것 많은 보드게임이 준비되어있었다.
+            다른 게임방에서 보기 힘든 여러가지 플스 게임도 있었고 음료도 충분히 많이 주셨다. 
+            특히 아이스라떼가 정말 맛있었다.
+            서울대 입구 모임공간 모락에서는 이것저것 많은 보드게임이 준비되어있었다.
+            다른 게임방에서 보기 힘든 여러가지 플스 게임도 있었고 음료도 충분히 많이 주셨다. 
+            특히 아이스라떼가 정말 맛있었다.
+            서울대 입구 모임공간 모락에서는 이것저것 많은 보드게임이 준비되어있었다.
+            다른 게임방에서 보기 힘든 여러가지 플스 게임도 있었고 음료도 충분히 많이 주셨다. 
+            특히 아이스라떼가 정말 맛있었다.
+            서울대 입구 모임공간 모락에서는 이것저것 많은 보드게임이 준비되어있었다.
+            다른 게임방에서 보기 힘든 여러가지 플스 게임도 있었고 음료도 충분히 많이 주셨다. 
+            특히 아이스라떼가 정말 맛있었다.
+            특히 아이스라떼가 정말 맛있었다.
+            서울대 입구 모임공간 모락에서는 이것저것 많은 보드게임이 준비되어있었다.
+            다른 게임방에서 보기 힘든 여러가지 플스 게임도 있었고 음료도 충분히 많이 주셨다. 
+            특히 아이스라떼가 정말 맛있었다.
+          </div>
+
+          <div class="btnArea text-end">
+            <a href="#" type: btn>이전으로</a>
+          </div>
+
+          </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <!-- // 본문 끝 -->
+
+  <!-- footer -->
+  <footer>
+    <div class="container">
+      © 2021 billieJoe All Rights Reserved.
+    </div>
+  </footer>
+
+</body>
+
+</html>
+<!-- //footer -->

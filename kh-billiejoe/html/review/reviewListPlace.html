@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>billieJoe</title>
+	  <!-- Google Webfonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Default Style -->
+    <link href="../dist/css/style.css" rel="stylesheet">
+    <link href="../dist/css/reviewStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+<!-- Bootstrap core JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <!-- 본문 시작 -->
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-2">
+        평점 : 4점<!--${reviewAvg}-->
+      </div>
+      
+      <div class="col-4">
+        이용후기 : ${reviewCount}
+      </div>
+    </div>
+    <hr>
+    <c:choose>
+                
+      <c:when test="${empty reviewList}">
+          <!-- <div colspan="6">후기글이 존재하지 않습니다.</div> -->
+      </c:when>
+                    
+      <c:otherwise>				
+        <c:forEach items="${reviewPlaceList}" var="review">
+
+          <div class="row justify-content-md-center reviewLine">
+            
+            <div class="col col-2 placeProfile" align="center" >
+              <img src="/member/image_sample/sample1.jpg">
+            </div>
+            
+            <div class="col col-9 pl">
+              <div class="row align-items-center avgRate">
+                
+                <div class="row place avgRate">
+                  <div class="col-2"><h3>홍길동</h3></div>
+                  <div class="col text-end"><a class="nav-link" data-toggle="modal" href="#modal-container-1">신고</a></div>
+                </div>
+                
+                <div class="row align-items-center justify-content-center place" >
+                
+                  <div class="col avgRate">
+                    <p class="star">
+                      <c:choose>
+                        <c:when test="${review.reviewRate == 1}">
+                          <i id="gold">★</i>
+                          <i id="gold">★</i>
+                          <i id="gold">★</i>
+                          <i>★</i>
+                          <i>★</i>
+                        </c:when>
+                      </c:choose>
+                    </p>  
+                  </div>
+                </div>
+
+                <div class="row place placeContent">
+                  ${review.reviewContent}
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  !!!!!!!!!!!!!!!!!!!
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  !!!!!!!!!!!!!!!!!!!
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                  !!!!!!!!!!!!!!!!!!!
+                </div>
+              </div>  
+            </div>
+          </div>
+          
+          <hr>
+                <!-- Modal창에 해당하는 html 코드는 페이지 마지막에 작성하는게 좋다 -->
+      <div class="modal" id="modal-container-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">신고하기</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form" method="POST" action="${contextPath}/inform/report">
+                       
+                        <div class="row justify-content-center">
+                            <label> 
+                                <li><input type="checkbox" name="curse" id="curse"> 욕설</li>
+                                <li><input type="checkbox" name="lie" id="lie"> 허위 사실</li>
+                            </label>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">신고하기</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        </c:forEach>
+      </c:otherwise>				
+    </c:choose>	
+
+    <div class="row-8 text-end">
+      <a href="#" class="btn btn-primary listBtn">더보기</a>
+    </div>
+    
+    <hr>
+    <div class="row-8">
+      <a href="#" class="btn btn-primary listBtn">목록으로</a>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
+<!-- //footer -->

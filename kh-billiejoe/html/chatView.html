@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>채팅방</title>
+<style>
+	.chatting-area{ 
+		margin:auto;
+		height: 600px;  
+		width : 800px;
+		margin-bottom: 50px;
+		margin-top : 50px;
+		border: 2px black solid;
+		border-radius: 10px;
+		margin-bottom: 15px;
+		}
+	.display-chatting{
+        margin-top: 0px;
+		width: 100%;
+		height: 450px;
+		overflow: auto;
+		list-style : none;
+		padding : 10px 10px;
+		
+	}
+	
+	.chat{
+		display: inline-block;
+		border-radius: 20%;
+		padding : 5px;
+		background-color: #eee;
+	}
+	
+	
+	.input-area{
+		margin:auto;
+		width : 800px;
+		display: flex;
+	}
+	
+	#inputChatting{
+		height: 50px;
+		width : 90%;
+		resize : none;
+		border-radius: 10px;
+	}
+	
+	#send{
+		width : 20%;
+	}
+	
+	.myChat{
+		text-align: right;
+	}
+	
+	.myChat > p{
+		background-color: yellow;
+	}
+	
+	.chatDate{
+		font-size: 9px;
+	}
+    #chat-header{
+        border-bottom: black 1px solid;
+        width: 100%;
+		height: 130px;
+		padding : 10px 10px;
+        margin-left: 0px;
+    }
+    #header-left img{
+        height: 80%;
+        margin-top: 15px;
+		margin-left: 20px;
+    }
+    #chat-header div{
+        height: 100%;
+    }
+	#content{
+		
+        border: black 1px solid;
+        border-radius: 10px;
+        line-height: 50px;
+    }
+    table img{
+        height: 90px;
+        width: 70px;
+
+    }
+    .td{
+        padding-left: 15px;
+    }
+    #name{
+        padding-left: 25px; 
+        font-size: 20px;
+    }
+	#send{
+		background-color: white;
+		width: 50px;
+		height: 50px;
+		margin-left: 15px;
+		border: none;
+	}
+	#send img{
+		width: 100%;
+		height: 100%;
+	}
+
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+	<jsp:include page="../common/header.jsp"></jsp:include>
+	
+	
+	<div class="chatting-area">
+        <div id="chat-header" class="row">
+            <div class="col-sm-6" id="header-left">
+                <a href="#"><img src="images/다운로드.png" alt="뒤로가기" style="height: 50%;"></a>
+                <img src="images/pngtree-admin-rolls-glyph-black-icon-png-image_4008300.jpg" alt="" style="border-radius: 50%;">
+                <strong id="name" >최광섭</strong>
+
+            </div>
+            <div class="col-sm-6" id="content">
+                <table >
+                    <tr>
+                        <td rowspan="2">
+                            <img src="images/unnamed.jpg" alt="">
+                        </td>
+
+                        <td class="td">서울대입구 마로</td>
+                    </tr>
+                    <tr>
+                        <td class="td"><strong>30,000원/시간</strong></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+		<ul class="display-chatting">
+            
+			<c:forEach items="${list}" var="msg">
+				<fmt:formatDate var="chatDate" value="${msg.createDate }" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
+				<c:if test="${msg.memberNo == loginMember.memberNo }">
+					<li class="myChat">
+						<span class="chatDate">${chatDate}</span>
+						<p class="chat">${msg.message }</p>
+					</li>
+				</c:if>
+				
+				<c:if test="${msg.memberNo != loginMember.memberNo }">
+					<li>
+						<b>${msg.memberName }</b>	<br>
+						<p class="chat">${msg.message }</p>
+						<span class="chatDate">${chatDate}</span>
+					</li>
+				</c:if>
+			
+			</c:forEach>
+	
+			
+			
+			
+		</ul>	
+			
+	
+	
+	</div>
+	
+	<div class="input-area">
+		<textarea id="inputChatting" rows="3"></textarea>
+		<button id="send"><img src="images/paper-planes-3128885_960_720.png" alt=""></button>
+	</div>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
+	
+	
+	<!--------------------------------------- sockjs를 이용한 WebSocket 구현을 위해 라이브러리 추가 ---------------------------------------------->
+	
+	<!-- 
+		WebSocket : 브라우저와 웹서버간의 전이중 통신을 지원하는 프로토콜  
+		(websocket을 위한 객체는 http를 이용해 생성되지만 생성 후 동작은 http와 별로도 진행된다)
+		전이중(full duplex) 통신 : 두 단말기가 데이터를 송수신 하기 위해 각각 독립된 회선을 사용하는 것
+		
+		WebSocket을 사용하기 위한 객체를 Javascript가 기본적으로 제공하고 있지만 웹소켓을 제공하지 않는 브라우저도 있다.
+		->sockjs를 이용하면 문제가 해결된다
+		
+		SockJS : 브라우저가 WebScoket을 제공하지 않을 때 비슷한 다른 객체를 찾아서 웹소켓 통신이 가능하도록 하는 Javascript 라이브러리	
+	-->
+	
+	
+	<!-- https://github.com/sockjs/sockjs-client -->
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	
+
+	<script>
+		// -------------------------------------------- WebSocket ----------------------------------------------
+	
+		//let chattingSock; // SockJS를 이용한 WebSocket 객체 저장 변수 선언
+	
+		// 로그인이 되어 있을 경우에만
+		// /chat 이라는 요청 주소로 통신할 수 있는  WebSocket 객체 생성
+		const chattingSock = new SockJS("${contextPath}/chat");
+		/* 
+			생성된 SockJS 객체는 자바스크립트 (브라우저에서 동작 == 클라이언트) 
+			/chat 주소로 오는 웹소켓 요청을 받아들이는 핸들러는 자바(서버에서 동작 == 서버)
+		*/
+		
+		const memberNo = "${loginMember.memberNo}";
+		const memberId = "${loginMember.memberId}";
+		const memberName = "${loginMember.memberName}";
+		const chatRoomNo = "${chatRoomNo}";
+		
+		$("#send").on("click", function(){
+				const chat = $("#inputChatting").val(); // 입력한 채팅 내용
+				
+				if(chat.trim().length == 0){   //채팅 입력이 없을경우
+					alert("채팅을 입력해주세요.");
+				}else{	//채팅이 입력되었을 경우 자바스크립트 객체 obj를 만들어 로그인한 회원의 정보, 채티방 번호, 채팅 내용을 삽입
+					var obj = { "memberNo" : memberNo,  
+											"memberId" : memberId,
+											"memberName" : memberName,
+											"chat" : chat,
+											"chatRoomNo" : chatRoomNo};
+				
+					//JSON : 자바스크립트 객체 표기법 , 자바스크립트 객체 모양의 문자열
+					
+					// JSON.stringify() : 자바스크립트 객체를 JSON 문자열로 변환
+					/* 웹소켓 통신 객체를 이용해 /chat 주소로 obj를 JSON으로 변환한 문자열을 전송 */
+					chattingSock.send(JSON.stringify(obj));
+					
+					$("#inputChatting").val("");
+				}
+		});
+		
+		
+		// WebSocket 객체 chattingSock이 서버로 부터 메세지를 통지 받으면 자동으로 실행될 콜백 함수
+		chattingSock.onmessage = function(event){
+			// 메소드를 통해 전달받은 객체값을 JSON객체로 변환해서 obj 변수에 저장.
+			const obj = JSON.parse(event.data);
+			console.log(obj);
+			
+			
+			const li = $("<li>");
+			const p = $("<p class='chat'>");
+			const span = $("<span class='chatDate'>");
+			span.html(obj.createDate);
+			
+			const chat = obj.chat.replace(/\n/g, "<br>");	
+			p.html(chat);
+			
+			
+			if(obj.memberNo == memberNo){
+				li.addClass("myChat");
+				li.append(span);								
+				li.append(p);
+			}else{
+				li.html("<b>" + obj.memberName + "</b><br>");
+				li.append(p);
+				li.append(span);								
+			}
+			
+			$(".display-chatting").append(li);
+			
+			// 채팅 입력 시 스크롤을 가장 아래로 내리기
+			$(".display-chatting").scrollTop($(".display-chatting")[0].scrollHeight);
+
+		}	
+	</script>
+</body>
+</html>

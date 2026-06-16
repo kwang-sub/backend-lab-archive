@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>billieJoe</title>
+	  <!-- Google Webfonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <!-- Default Style -->
+  <link href="../dist/css/style.css" rel="stylesheet">
+  <link href="../dist/css/reviewStyle.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+  <!-- // header.jsp -->
+  <header class="sticky-top shadow">
+    <nav class="navbar navbar-light flex-md-nowrap p-0 container">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">billieJoe</a>
+      <div class="input-group">
+        <select class="form-select form-control-dark" id="placeSearchCond">
+          <option value="1" selected>장소명</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <input class="form-control form-control-dark" type="text" placeholder="Search">
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="#">로그인</a>
+        </li>
+        <li class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="#">회원가입</a>
+        </li>
+      </ul>
+      <button class="navbar-toggler me-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" type="button"><span
+          class="navbar-toggler-icon"></span></button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          대충 메뉴 들어가는 부분
+        </div>
+      </div>
+    </nav>
+  </header>
+    <!-- 본문 시작 -->
+  <!-- 각 페이지의 jsp 파일은 header와 footer를 제외한 본문만 남겨서 작성해주세요. (이클립스에서 보여주는 빨간줄 표시는 무시하셔도 됩니다.) -->
+  <!-- !!! 강사님은 알아서 합쳐주니 괜찮다고 하셨지만 세 부분으로 나누어 졌을 때 겹치는 곳이 없고 셋이 합쳐 하나의 완성된 html 파일이 되도록 include 되어야 합니다 !!! -->
+  <div class="container py-5">
+    <div class="content-header row">
+      <h2 class="col">내가 작성한 후기</h2>
+      <div class="col text-end">
+        <a href="#" class="btn btn-primary">장소 등록</a>
+      </div>
+    </div>
+    <div class="row">
+      <nav class="col-md-3">
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action">내 정보</a>
+          <a href="#" class="list-group-item list-group-item-action">내 정보 수정</a>
+          <a href="#" class="list-group-item list-group-item-action">비밀번호 변경</a>
+          <hr>
+          <a href="#" class="list-group-item list-group-item-action">내가 예약한 장소</a>
+          <a href="#" class="list-group-item list-group-item-action">내가 찜한 장소</a>
+          <a href="#" class="list-group-item list-group-item-action active">내가 작성한 후기</a>
+          <hr>
+          <a href="#" class="list-group-item list-group-item-action">내가 등록한 장소</a>
+          <a href="#" class="list-group-item list-group-item-action">예약 접수 내역</a>
+        </div>
+      </nav>
+
+        <div class="col-md-9">
+                
+                <c:choose>
+                
+                    <c:when test="${empty reviewList}">
+<!--                         <tr>
+                        <td colspan="6">후기글이 존재하지 않습니다.</td>
+                        </tr>		 -->						
+                    </c:when>
+                    
+                    <c:otherwise>
+                    
+                        <c:forEach items="${reviewList}" var="review">
+                            <div class="row listform">
+
+	                                <div class="col-4">
+		                                <div class=" imgArea" align="center">
+		                                	<img src="" >
+		                                </div>
+	                                </div>
+	
+	                                <div class="col-8">
+	                                    
+	                                    <br>
+	                                    <div class="reviewDate">
+	                                    작성일 : &nbsp;
+		                                    <fmt:formatDate var="reviewDate" value="${review.reviewDate}"  pattern="yyyy년 M월 d일"/>                          
+		                                    <fmt:formatDate var="today" value="<%= new java.util.Date() %>"  pattern="yyyy-MM-dd"/>                          
+	                                    
+	                                    <c:choose>
+	
+	                                        <c:when test="${reviewDate != today}">
+	                                        	2021년 8월 10일
+	                                        </c:when>
+	                                        
+	                                        <c:otherwise>
+	                                            <fmt:formatDate value="${review.reviewDate}"  pattern="HH:mm"/>                          
+	                                        </c:otherwise>
+	                                        
+	                                    </c:choose>
+	                                    
+	                                    <br>
+	                                    </div>
+	
+	                                    <div class="row" >
+	                                        
+	                                        <div class="col-8 div-inline listPlace">
+                                              서울대입구 더원 스터디룸
+	                                        </div>
+	                                        
+	                                        <div class="col-4 div-inline text-end" >                                                
+	                                        <div class= "listRate">
+											                    	<p class="star">
+			                                        <c:choose>
+			                                        	<c:when test="${review.reviewRate == 1}">
+                                                  <i id="gold">★</i>
+                                                  <i>★</i>
+                                                  <i>★</i>
+                                                  <i>★</i>
+                                                  <i>★</i>
+			                                        	</c:when>
+			                                        	<!-- <c:when test="${review.reviewRate == 2}">
+			                                        		<i id="gold">★</i> 
+                                                  <i id="gold">★</i>
+                                                  <i>★</i>
+                                                  <i>★</i>
+                                                  <i>★</i>
+			                                        	</c:when>
+			                                        	<c:when test="${review.reviewRate == 3}">
+			                                        		<i id="gold">★</i> 
+                                                  <i id="gold">★</i>
+                                                  <i id="gold">★</i>
+                                                  <i>★</i>
+                                                  <i>★</i>
+			                                        	</c:when>
+			                                        	<c:when test="${review.reviewRate == 4}">
+			                                        		<i id="gold">★</i> 
+                                                  <i id="gold">★</i>
+                                                  <i id="gold">★</i>
+                                                  <i id="gold">★</i>
+                                                  <i >★</i>
+			                                        	</c:when>
+			                                        	<c:otherwise>
+			                                        		<i id="gold">★</i> 
+                                                  <i id="gold">★</i>
+                                                  <i id="gold">★</i>
+                                                  <i id="gold">★</i>
+                                                  <i id="gold">★</i>
+			                                        	</c:otherwise> -->
+			                                        </c:choose>
+	                                        	</p>
+										                    	</div>
+	                                   		</div>    
+	                                            
+	                                    <hr>
+	
+	                                    <div class="row listContent">
+	                                        <p>
+                                            공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                                            공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                                            공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                                            공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                                            공부하기 쾌적하지도 않고 음료도 너무 적었습니다.
+                                            !!!!!!!!!!!!!!!!!!!
+                                          </p>
+	                                    </div>
+	                                    
+	                                    <div class="row listBtnArea text-end">
+	                                        <c:if test="${!empty loginMember }">
+	                                            <a href="#" class="btn btn-primary listBtn">수정</a>
+	                                            <a href="#" class="btn btn-primary listBtn">삭제</a>
+	                                        </c:if>
+	                                    </div>
+
+		                                </div>
+                            	</div>
+                          </div>
+
+                        </c:forEach>
+                    
+                    </c:otherwise>
+                
+                </c:choose>
+                
+
+            </div>
+
+            
+            <c:set var="pageURL" value="reviewList"  />
+            
+            <c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}" />
+            <c:set var="next" value="${pageURL}?cp=${pagination.nextPage}" />
+            
+            
+            <div class="my-5">
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              
+            </div>
+        </div>
+    </div>
+  <!-- // 본문 끝 -->
+
+  <!-- footer -->
+  <footer>
+    <div class="container">
+      © 2021 billieJoe All Rights Reserved.
+    </div>
+  </footer>
+
+</body>
+
+</html>
+<!-- //footer -->

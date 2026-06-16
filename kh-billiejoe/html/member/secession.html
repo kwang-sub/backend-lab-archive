@@ -1,0 +1,133 @@
+<!-- header.jsp -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원 탈퇴</title>
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <!-- 경로수정 -->
+  <link href="../dist/css/style.css" rel="stylesheet">
+  <link href="../dist/css/memberStyle.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  <!-- sweetalert API 추가 --> 
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<style>
+  input::-webkit-input-placeholder { text-align: center; }
+</style>
+  </head>
+<body>
+  <header class="sticky-top shadow">
+    <nav class="navbar navbar-light flex-md-nowrap p-0 container">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">billieJoe</a>
+      <div class="input-group">
+        <select class="form-select form-control-dark" id="placeSearchCond">
+          <option value="1" selected>장소명</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <input class="form-control form-control-dark" type="text" placeholder="Search">
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="#">로그인</a>
+        </li>
+        <li class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="#">회원가입</a>
+        </li>
+      </ul>
+      <button class="navbar-toggler me-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" type="button"><span class="navbar-toggler-icon"></span></button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          대충 메뉴 들어가는 부분
+        </div>
+      </div>
+    </nav>
+  </header>
+<!-- // header.jsp -->
+
+<!-- 본문 시작 -->
+<!-- 각 페이지의 jsp 파일은 header와 footer를 제외한 본문만 남겨서 작성해주세요. (이클립스에서 보여주는 빨간줄 표시는 무시하셔도 됩니다.) -->
+<!-- !!! 강사님은 알아서 합쳐주니 괜찮다고 하셨지만 세 부분으로 나누어 졌을 때 겹치는 곳이 없고 셋이 합쳐 하나의 완성된 html 파일이 되도록 include 되어야 합니다 !!! -->
+  	<!-- 본문 시작 -->
+	<!-- 각 페이지의 jsp 파일은 header와 footer를 제외한 본문만 남겨서 작성해주세요. (이클립스에서 보여주는 빨간줄 표시는 무시하셔도 됩니다.) -->
+	<!-- !!! 강사님은 알아서 합쳐주니 괜찮다고 하셨지만 세 부분으로 나누어 졌을 때 겹치는 곳이 없고 셋이 합쳐 하나의 완성된 html 파일이 되도록 include 되어야 합니다 !!! -->
+	<div class="container py-5 outer">
+	
+		<form action="secession" method="post" class="form-signin">
+			
+			<div class="row text-center login">
+				<h2 style="font-weight: 600;">회원 탈퇴</h2>
+			</div>
+
+      <br><br>
+	
+			<div class="row text-center">
+				<p>
+          진행 중인 예약 사항이 있을 경우 회원 탈퇴는 불가합니다.
+        </p>
+				<p>
+          탈퇴를 위해 진행 중인 예약은 모두 취소하세요.
+        </p>
+			</div>
+
+      <br>
+	
+			<div class="row text-center">
+        <p>
+          탈퇴를 위한 현재 비밀번호를 입력하세요.
+        </p>
+			</div>
+      
+			<div class="row login">
+        <input class="form-control" type="password" id="memberPw" name="memberPw" placeholder="현재 비밀번호를 입력하세요">
+			</div>
+      
+      <br>
+
+      <div class="row text-center">
+        <p>
+          정말로 탈퇴하시겠습니까?
+        </p>
+      </div>
+
+			<div class="row login">
+				<button type="submit" class="btn btn-primary">회원 탈퇴</button>
+			</div>
+	
+		</form>
+	</div>
+
+		<!-- 로그인 실패와 같은 메세지가 서버로부터 전달되어 온 경우 출력 
+		<c:if test="${!empty title}">
+			<script>
+				swal({
+					"icon" : "${icon}",
+					"title" : "${title}",
+					"text" : "${text}"
+				});
+			</script>
+		</c:if>
+  -->
+
+	<!-- // 본문 끝 -->
+<!-- footer -->
+  <footer>
+    <div class="container">
+      © 2021 billieJoe All Rights Reserved.
+    </div>
+  </footer>
+  
+  <script src="${contextPath}/resources/js/member.js"></script>
+</body>
+</html>
+<!-- //footer -->

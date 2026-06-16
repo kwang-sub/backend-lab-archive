@@ -1,0 +1,71 @@
+	
+	div{
+        width:auto;
+        margin: auto;
+        padding: 1%;
+    }
+	
+	/* 로그인 jsp */
+	.login{
+		width: 500px;
+		height: 60px;
+		margin: auto;
+		padding: 1%;
+		float: none;
+		margin:	0 auto;
+	}
+	
+	.outer {
+	  display: flex;
+	  justify-content: center;
+	}
+	
+	/* 회원가입 jsp */
+	
+	.signRow {
+		width: 550px;
+		height: 70px;
+		margin: auto;
+		padding: 1%;
+	}
+	
+	.profileRow {
+		width: 550px;
+		height: 250px;
+		margin: auto;
+		padding: 1%;
+	}
+	
+	input::placeholder {
+		font-size: 10pt;
+	}
+	
+	.picture {
+		cursor: pointer;
+		width: 200px;
+		height: 200px;
+		border: 1px solid #ced4da;
+		position: relative;
+	}
+	
+	.picture>img {
+		max-width: 100%;
+		max-height: 100%;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+	
+	#fileArea {
+		display: none;
+	}
+	
+	.sec{
+		width: 500px;
+	}
+
+
+	

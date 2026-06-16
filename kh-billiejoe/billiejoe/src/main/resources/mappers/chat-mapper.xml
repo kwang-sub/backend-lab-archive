@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatMapper">
+
+	<resultMap type="ChatMsg" id="chatMsg_rm">
+			<id property="chatMsgNo" column="CHAT_MSG_NO"/>
+			
+	 		<result property="chatMsgContent" column="CHAT_MSG_CONTENT"/>
+	 		<result property="chatMsgDate" column="CHAT_MSG_DATE"/>
+	 		<result property="chatRoomNo" column="CHATROOM_NO"/>
+	 		<result property="memberNo" column="MEMBER_NO"/>
+	 		<result property="memberName" column="MEMBER_NAME"/>
+	</resultMap>
+	
+	
+	<!-- 파일 정보 조회용 resultMap -->
+	<resultMap type="Attachment" id="chatattachment_rm">
+		<id property="fileNo" column="FILE_NO"/>
+		
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileLevel" column="FILE_LEVEL"/>
+		<result property="boardNo" column="BOARD_NO"/>
+	</resultMap>
+	
+	<!-- place 조회용 resultMap -->
+	<resultMap type="Place" id="chatplace_rm">
+		<id property="placeNo" column="PLACE_NO"/> 
+
+		<result property="placeName" column="PLACE_NAME" />
+		<result property="placeSummary" column="PLACE_SUMMARY"/>
+		<result property="placeAddr" column="PLACE_ADDR" />
+		<result property="placeContent" column="PLACE_CONTENT"/>
+		<result property="placeCharge" column="PLACE_CHARGE" />
+		<result property="placeDate" column="PLACE_DATE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="likeCount" column="LIKE_COUNT" />
+		
+		 <collection property="atList" column="PLACE_NO" javaType="java.util.ArrayList" ofType="Attachment" select="chatselectAttachment"/>
+	</resultMap >
+	
+	<resultMap type="ChatList" id="chatlist_rm">
+		<id property="chatRoomNo" column="CHAT_ROOM_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="chatPlaceNo" column="PLACE_NO"/>
+		<result property="chatFilePath" column="FILE_PATH"/>
+		<result property="chatFileName" column="FILE_NAME"/>
+		<result property="chatMsg" column="CHAT_MSG_CONTENT"/>
+		<result property="chatMsgDate" column="CHAT_MSG_DATE"/>
+		<result property="placeMemberNo" column="PLACE_MEMBER_NO"/>
+		<collection property="member" column="{memberNo=MEMBER_NO, chatRoomNo=CHAT_ROOM_NO}" javaType="Member" ofType="Member" select="chatOpponent"></collection>
+	</resultMap>
+	<select id="chatOpponent" parameterType="java.util.Map" resultMap="opponent_rm">
+		SELECT MEMBER_NO, MEMBER_PIC,MEMBER_NAME
+		FROM CHAT_USER 
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE MEMBER_NO != #{memberNo}
+		AND CHAT_ROOM_NO = #{chatRoomNo} 
+	</select>
+	
+	<resultMap type="Member" id="opponent_rm">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberPic" column="MEMBER_PIC"/>
+	</resultMap>
+	
+	
+	 <!-- 채팅 목록조회  -->
+	 <select id="selectChatList" parameterType="_int" resultMap="chatlist_rm">
+
+			SELECT DISTINCT CHAT_ROOM_NO, A.MEMBER_NO, PLACE_NO, CHAT_JOIN_STATUS,FILE_PATH,FILE_NAME,CHAT_MSG_CONTENT,CHAT_MSG_DATE,B.MEMBER_NO PLACE_MEMBER_NO
+		FROM CHAT_USER A
+		LEFT JOIN CHAT_ROOM USING(CHAT_ROOM_NO)
+		LEFT JOIN (SELECT PLACE_NO,FILE_PATH,FILE_NAME,MEMBER_NO
+			        FROM PLACE 
+			        JOIN ATTACHMENT USING(PLACE_NO)
+			        WHERE FILE_LEVEL = 0) B USING(PLACE_NO)
+		LEFT JOIN(SELECT CHAT_MSG_CONTENT,CHATROOM_NO,CHAT_MSG_DATE
+			    FROM CHAT_MSG
+                WHERE CHATROOM_NO IN( SELECT CHATROOM_NO
+                                        FROM CHAT_MSG
+                                        GROUP BY CHATROOM_NO) 
+                AND CHAT_MSG_DATE IN ( SELECT MAX(CHAT_MSG_DATE)
+                                        FROM CHAT_MSG
+                                        GROUP BY CHATROOM_NO)                        
+			    ORDER BY CHAT_MSG_NO DESC) ON (CHATROOM_NO =CHAT_ROOM_NO)
+			WHERE A.MEMBER_NO = #{memberNo}
+			AND CHAT_JOIN_STATUS = 'Y'
+			ORDER BY CHAT_MSG_DATE DESC
+			
+	 </select>
+	 
+	<!-- 업로드된 이미지 조회 -->
+	<select id="chatselectAttachment" parameterType="_int" resultMap="chatattachment_rm">
+		SELECT * FROM ATTACHMENT WHERE PLACE_NO = #{placeNo} ORDER BY FILE_LEVEL
+	</select>
+	<!-- 게시글 상세조회 (수정예정)  -->	
+	<select id="chatPlace" parameterType="ChatRoom" resultMap="chatplace_rm">
+		SELECT * FROM PLACE_VIEW
+		JOIN CHAT_ROOM USING(PLACE_NO)
+		WHERE PLACE_NO = #{placeNo} AND PLACE_IS_AVAILABLE = 'Y' AND PLACE_STATUS = 'Y' AND CHAT_ROOM_NO = #{chatRoomNo}
+	</select> 
+	
+	<!-- 채팅방 있는지 조회 -->
+	<select id="checkChatRoom" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM CHAT_ROOM WHERE CHAT_ROOM_NO=#{chatRoomNo}
+	</select>
+	
+	<!-- 채팅방 만들기 -->
+	<insert id="insertChatRoom" parameterType="ChatRoom" >
+		INSERT INTO CHAT_ROOM VALUES(#{chatRoomNo}, #{placeNo},#{memberNo})
+	</insert>
+	
+	<!-- 채팅방에 참여자 넣기 -->
+	<insert id="joinChatRoom" parameterType="ChatRoom">
+		INSERT INTO CHAT_USER (MEMBER_NO,CHAT_ROOM_NO,CHAT_JOIN_STATUS)
+								SELECT #{memberNo}, #{chatRoomNo},'Y' FROM DUAL
+								UNION ALL
+								SELECT	#{placeMemberNo} , #{chatRoomNo}, 'Y' FROM DUAL
+	</insert>
+	
+	<select id="selectList" parameterType="_int" resultMap="chatMsg_rm">
+		SELECT CHAT_MSG_CONTENT, CHAT_MSG_DATE,MEMBER_NO,MEMBER_NAME
+			FROM CHAT_MSG
+			JOIN MEMBER USING(MEMBER_NO)
+			WHERE CHATROOM_NO = #{chatRoomNo}
+			ORDER BY CHAT_MSG_NO
+	</select>
+	
+	<insert id="insertChatMsg" parameterType="ChatMsg" >
+		INSERT INTO CHAT_MSG VALUES(SEQ_CHAT_MSG.NEXTVAL, #{chatMsgContent}, DEFAULT, #{memberNo}, #{chatRoomNo})
+		
+	</insert>
+	<update id="allOpenChat" parameterType="_int">
+		UPDATE CHAT_USER SET CHAT_JOIN_STATUS = 'Y' WHERE CHAT_ROOM_NO = #{chatRoomNo}
+	</update>
+	<update id="chatRoomDelete" parameterType="ChatRoom">
+		UPDATE CHAT_USER SET CHAT_JOIN_STATUS = 'N' WHERE CHAT_ROOM_NO = #{chatRoomNo} AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<select id="chatMember" parameterType="ChatRoom" resultMap="opponent_rm">
+		SELECT MEMBER_NO, MEMBER_PIC,MEMBER_NAME
+		FROM CHAT_USER 
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE MEMBER_NO != #{memberNo}
+		AND CHAT_ROOM_NO = #{chatRoomNo}
+		
+	</select>
+</mapper>
