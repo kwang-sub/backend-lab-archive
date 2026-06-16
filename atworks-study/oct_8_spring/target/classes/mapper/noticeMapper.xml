@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.shop.notice.NoticeMapper">
+	
+	<select id="getList" resultType="hashmap" parameterType="hashmap">
+		select * from notice_info
+		<if test="search_type !=null and search_type !='choose'" >
+			where
+			<choose>
+				<when test="search_type =='ni_title'">
+					ni_title like '%${search_key}%'
+				</when>
+				<when test="search_type == 'ni_content'">
+					ni_content like '%${search_key}%'
+				</when>
+				<when test="search_type == 'ni_no'">
+					ni_no = #{search_key_int}
+				</when>
+			</choose>
+		</if>
+		
+		order by ni_no desc
+		limit #{E_OFFSET}-#{S_OFFSET} offset #{S_OFFSET}
+		
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		select count(*) from notice_info
+		<if test="search_type !=null and search_type !='choose'">
+			where
+			<choose>
+				<when test="search_type =='ni_title'">
+					ni_title like '%${search_key}%'
+				</when>
+				<when test="search_type == 'ni_content'">
+					ni_content like '%${search_key}%'
+				</when>
+				<when test="search_type == 'ni_no'">
+					ni_no = #{search_key_int}
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<insert id="write" parameterType="com.spring.shop.notice.NoticeVO">
+		insert into notice_info (ni_no, ni_title, ni_content, mi_id)
+		values(nextval('seq_ni_no'),#{ni_title}, #{ni_content}, #{mi_id} )
+	</insert>
+	
+	
+	<select id="getView" parameterType="int" resultType="com.spring.shop.notice.NoticeVO">
+		select * from notice_info  where ni_no = #{ni_no}
+	</select>
+	
+	<update id="modify" parameterType="com.spring.shop.notice.NoticeVO">
+		update notice_info set ni_title = #{ni_title}, ni_content = #{ni_content}, ni_modifi_dt = to_char(now(), 'YYYYMMDDHH24MISS'::text) where ni_no = #{ni_no}	
+	</update>
+	
+	<delete id="delete">
+		delete from notice_info where ni_no = #{ni_no}
+	</delete>
+</mapper>

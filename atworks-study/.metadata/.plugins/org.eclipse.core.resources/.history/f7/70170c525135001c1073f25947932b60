@@ -1,0 +1,9 @@
+package com.spring.shop.gallery;
+
+public interface GalleryMapper {
+
+	int insert(GalleryVO gallery);
+
+	int getTotal();
+
+}

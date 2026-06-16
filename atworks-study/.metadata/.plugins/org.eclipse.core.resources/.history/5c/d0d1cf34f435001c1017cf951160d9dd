@@ -1,0 +1,59 @@
+package com.spring.shop.reple;
+
+import java.lang.reflect.Member;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.spring.shop.member.MemberVO;
+import com.spring.shop.notice.NoticeDAO;
+import com.spring.shop.notice.NoticeMapper;
+
+@Service
+public class RepleDAO {
+
+	@Autowired
+	SqlSession ss;
+	
+	public Map<String, Object> getList(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		int ni_no = Integer.parseInt(req.getParameter("ni_no"));
+		int curPage = Integer.parseInt(req.getParameter("curPage"));
+		int pagePerCnt = Integer.parseInt(req.getParameter("pagePerCnt"));
+		
+		int total = ss.getMapper(RepleMapper.class).getTotal(ni_no);
+		NoticeDAO nDAO = new NoticeDAO();
+		Map<String, Object> page =  nDAO.generatePagingParam(total, pagePerCnt, curPage);
+		page.put("ni_no", ni_no);
+		List<RepleVO> rList = ss.getMapper(RepleMapper.class).getList(page);
+		
+		Map<String, Object> res = new HashMap<String, Object>();
+		
+		res.put("list", rList);
+		res.put("total", total);
+		return res;
+	}
+
+	public Map<String, Object> insert(HttpServletRequest req) {
+		
+		int ni_no = Integer.parseInt(req.getParameter("ni_no"));
+		String ri_content = req.getParameter("ni_content");
+		MemberVO loginMember = (Member)req.getSession().getAttribute("loginMember");
+		
+		RepleVO re = new RepleVO();
+		
+		
+		re.setNi_no(ni_no);
+		re.setRi_content(ri_content);
+		re.setMi_id(loginMember.get);
+		
+		return null;
+	}
+
+}

@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+
+<div class="contaner">
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-6">
+			
+			<form action="/gallery/modify" method="post" enctype="multipart/form-data" id="modify-form">
+			
+				<div class="input-group input-group-sm mb-3">
+				  <span class="input-group-text" id="inputGroup-sizing-sm">title</span>
+				  <input type="text" name="gi_title" value="${ga.gi_title }">
+				</div>
+				
+				<input type="text" name="gi_fileName" value="${ga.gi_fileName }">
+				<input type="text" name="gi_no" value="${ga.gi_no }">
+				<div class="input-group mb-3">
+				  <input type="file" class="form-control" id="inputGroupFile02" name="img">
+				  <label class="input-group-text" for="inputGroupFile02">Upload</label>
+				</div>
+			
+				<button type="button" onclick="check()" class="btn btn-primary">write</button>
+			</form>
+		
+		</div>
+		<div class="col-3"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	function check() {
+		
+		var val = $("#inputGroupFile02").val();
+		console.log(val);
+		if(val == ''){
+			alert("이미지를 선택해주세요.")
+		}else{
+			$("#modify-form").submit();
+		}
+	}
+</script>
+

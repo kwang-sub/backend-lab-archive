@@ -1,0 +1,17 @@
+package com.spring.shop.reple;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class RepleDAO {
+
+	public void getList(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		int ni_no = Integer.parseInt(req.getParameter("ni_no"));
+		System.out.println(ni_no);
+		
+	}
+
+}

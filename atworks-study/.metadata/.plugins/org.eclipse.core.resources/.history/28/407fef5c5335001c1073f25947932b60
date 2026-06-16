@@ -1,0 +1,14 @@
+package com.spring.shop.gallery;
+
+import java.util.List;
+import java.util.Map;
+
+public interface GalleryMapper {
+
+	int abstract insert(GalleryVO gallery);
+
+	int getTotal();
+
+	List<GalleryVO> getList(Map<String, Object> page);
+
+}

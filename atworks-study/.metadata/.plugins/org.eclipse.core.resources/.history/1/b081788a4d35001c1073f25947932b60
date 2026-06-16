@@ -1,0 +1,90 @@
+package com.spring.shop.notice;
+
+
+import java.net.http.HttpRequest;
+import java.util.HashMap;
+//import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+@Controller
+public class NoticeController {
+	
+	@Autowired
+	NoticeDAO nDAO;
+	
+	@GetMapping("notice")
+	public String notice(HttpServletRequest req) {
+		
+		
+		req.setAttribute("contentPage", "notice/notice.jsp");
+		return "home";
+	}
+	
+	@PostMapping("/notice")
+	@ResponseBody
+	public HashMap<String, Object> boardList(HttpServletRequest req) {
+		return nDAO.getList(req);
+	}
+	
+	
+	@GetMapping("/write")
+	public String writePage(HttpServletRequest req) {
+		req.setAttribute("contentPage", "notice/write.jsp");
+		return "home";
+	}
+	@PostMapping("/write")
+	public String write(HttpServletRequest req) {
+		
+		nDAO.insertNotice(req);
+		req.setAttribute("contentPage", "notice/notice.jsp");
+		return "home";
+	}
+	
+	@GetMapping("/view")
+	public String view(HttpServletRequest req) {
+		
+		nDAO.view(req);
+		
+		req.setAttribute("contentPage", "notice/view.jsp");
+		return "home";
+		
+	}
+	@GetMapping("/notice/modify")
+	public String modifyPage(HttpServletRequest req) {
+		
+		nDAO.view(req);
+		req.setAttribute("contentPage", "notice/modify.jsp");
+		return "home";
+		
+	}
+	
+	@PostMapping("/notice/modify")
+	public String modify(HttpServletRequest req) {
+		
+		nDAO.modify(req);
+		req.setAttribute("contentPage", "notice/view.jsp");
+		
+		return "home";
+	}
+	
+	@GetMapping("/notice/delete")
+	public String delete(HttpServletRequest req) {
+		
+		nDAO.delete(req);
+		req.setAttribute("contentPage", "notice/notice.jsp");
+		
+		return "home";
+	}
+	
+	
+	
+	
+}

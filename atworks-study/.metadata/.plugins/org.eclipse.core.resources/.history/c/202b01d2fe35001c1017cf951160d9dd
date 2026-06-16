@@ -1,0 +1,46 @@
+package com.spring.shop.reple;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+@RequestMapping("/reple/*")
+public class RepleController {
+	
+	@Autowired
+	RepleDAO rDAO;
+	
+	@PostMapping("list")
+	@ResponseBody
+	public Map<String, Object>getList(HttpServletRequest req){
+		
+		Map<String, Object> res = rDAO.getList(req);
+		return res;
+		
+	}
+	@PostMapping("insert")
+	@ResponseBody
+	public Map<String, Object>insert(HttpServletRequest req){
+		
+		 Map<String, Object> res = rDAO.insert(req);
+		 return res;
+	}
+	@PostMapping("modify")
+	@ResponseBody
+	public Map<String, Object> modify(HttpServletRequest req){
+		
+		Map<String, Object> res = rDAO.modify(req);
+		
+		return null;
+	}
+	
+}

@@ -1,0 +1,9 @@
+package com.spring.shop.reple;
+
+import java.util.List;
+
+public interface RepleMapper {
+
+	List<RepleVO> getList(int ni_no);
+
+}

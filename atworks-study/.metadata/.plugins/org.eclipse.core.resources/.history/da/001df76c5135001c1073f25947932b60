@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.shop.gallery.GalleryMapper">
+	
+	<insert id="insert" parameterType="com.spring.shop.gallery.GalleryVO">
+		insert into gallery_info (gi_no, gi_title, gi_filePath, gi_fileName, mi_id) values(nextval('seq_gi_no'),#{gi_title},#{gi_filePath},#{gi_fileName},#{mi_id})
+	</insert>
+	
+	<select id="getTotal">
+		select * from notice_info
+	</select>
+	
+	<select id="getList" resultType="list" parameterType="map"></select>
+</mapper>

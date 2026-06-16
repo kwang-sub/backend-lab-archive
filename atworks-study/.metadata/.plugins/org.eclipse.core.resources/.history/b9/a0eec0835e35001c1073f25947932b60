@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+	<div class="contaner">
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8">
+				<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">ni_no</th>
+			      <th scope="col">ni_title</th>
+			      <th scope="col">ni_content</th>
+			      <th scope="col">ni_isert_dt</th>
+			      <th scope="col">ni_modifi_dt</th>
+			      <th scope="col">mi_id</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    
+			  </tbody>
+			</table>
+			</div>
+			<div class="col-2"></div>
+			<div id="pageNav"></div>
+		</div>
+		
+		
+		<div class="input-group">
+		  <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+		    <option selected value="choose">Choose...</option>
+		    <option value="ni_no" >ni_no</option>
+		    <option value="ni_title">ni_title</option>
+		    <option value="ni_content">ni_content</option>
+		  </select>
+		  <input id="search_Keyword">
+		  <button class="btn btn-outline-secondary" type="button" id="search-btn">Button</button>
+		</div>
+		  <a class="btn btn-primary" href="write" >글쓰기</a>
+		
+	</div>
+	
+	
+	
+
+	<script type="text/javascript">
+	var data = {};
+	var initialize = function(){
+		
+		Search(1);
+		$("#search-btn").click(function(){
+			var searchType = $("#inputGroupSelect04 option:selected").val();
+			var searchKeyword = $("#search_Keyword").val();
+			data.search_type = searchType;
+			data.search_key = searchKeyword;
+			Search(1);
+		});
+		
+		 
+	}
+	
+	var Search = function(selPage) {
+		
+		data.curPage = selPage;
+		data.pagePerCnt = 10;
+		$.ajax({
+			type : 'post',
+			url : "/notice",
+			data : {
+				search_type : data.search_type,
+				search_key : data.search_key,
+				curPage : data.curPage,
+				pagePerCnt : data.pagePerCnt
+			},
+			success : function(value) {
+				var notice = value.list;
+				$("tbody").children().remove();
+				var html = "";
+				for(var i = 0; i < notice.length; i++){
+					
+					
+					html += '<tr>';
+					html += '<td>' + notice[i].ni_no + '</td>';
+					html += '<td>' +'<a href=/view?ni_no='+notice[i].ni_no+'  >'+ notice[i].ni_title + '</a>'+'</td>';
+					html += '<td>' + notice[i].ni_content + '</td>';
+					html += '<td>' + notice[i].ni_isert_dt + '</td>';
+					html += '<td>' + notice[i].ni_modifi_dt + '</td>';
+					html += '<td>' + notice[i].mi_id + '</td>';
+					html += '</tr>';
+				}				
+				$("tbody").append(html);
+				$("#pageNav").paging({
+					pageSize : data.pagePerCnt,  
+					PAGE_PER_CNT:  data.pagePerCnt, 
+					currentPage: data.curPage,
+					pageTotal: value.total
+				});
+			}
+		});
+
+	}
+	var goPage = function(selPage){
+		Search(selPage);
+	}
+	</script>
+	<jsp:include page="reple.jsp">

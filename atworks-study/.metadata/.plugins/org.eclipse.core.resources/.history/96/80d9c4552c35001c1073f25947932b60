@@ -1,0 +1,37 @@
+package com.spring.shop.gallery;
+
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class GalleryController {
+	
+	
+	@GetMapping("/gallery")
+	public String gallery(HttpServletRequest req) {
+		
+		req.setAttribute("contentPage", "gallery/gallery.jsp");
+		return "home";
+	}
+	
+	@GetMapping("/gallery/write")
+	public String writePage(HttpServletRequest req) {
+		
+		req.setAttribute("contentPage", "gallery/write.jsp");
+		return "home";
+	}
+	
+	
+	@PostMapping("/gallery/write")
+	public String write(HttpServletRequest req) {
+		
+		return "home";
+	}
+	
+}

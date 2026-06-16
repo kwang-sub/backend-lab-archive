@@ -1,0 +1,156 @@
+package com.spring.shop.gallery;
+
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Member;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.spring.shop.member.MemberVO;
+import com.spring.shop.notice.NoticeDAO;
+
+@Service
+public class GalleryDAO {
+	
+	@Autowired
+	SqlSession ss;
+	
+	
+	@Transactional
+	public void insertGallery(HttpServletRequest req) {
+		
+		String savePath = req.getSession().getServletContext().getRealPath("/resources/file");
+		MultipartRequest mr = null;
+		
+//		해당결로에 디렉터리 있나 확인후 없으면 생성
+		File saveDir = new File(savePath);
+		if(!saveDir.exists()) {
+			saveDir.mkdirs();
+			
+			
+		}
+		
+		try {
+//			파일저장
+			mr = new MultipartRequest(req, savePath, 10*1024*1024, "UTF-8", new DefaultFileRenamePolicy());
+			
+			GalleryVO gallery = new GalleryVO();
+			
+			MemberVO loginMember = (MemberVO)req.getSession().getAttribute("loginMember");
+			
+			gallery.setGi_fileName(mr.getFilesystemName("img"));
+			gallery.setGi_filePath(savePath);
+			gallery.setMi_id(loginMember.getMi_id());
+			gallery.setGi_title(mr.getParameter("gi_title"));
+			
+			
+			int result = ss.getMapper(GalleryMapper.class).insert(gallery);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+	}
+
+
+	public Map<String, Object> getList(HttpServletRequest req) {
+		
+		int curPage = Integer.parseInt(req.getParameter("curPage")) ;
+		int pagePerCnt = Integer.parseInt(req.getParameter("pagePerCnt"));
+		
+		
+		int total = ss.getMapper(GalleryMapper.class).getTotal();
+		
+		NoticeDAO nDAO = new NoticeDAO();
+		Map<String, Object> page =  nDAO.generatePagingParam(total, pagePerCnt, curPage);
+		
+		ArrayList<GalleryVO> list = ss.getMapper(GalleryMapper.class).getList(page);
+		
+		
+		
+		Map<String, Object> rst = new HashMap<String, Object>();
+		rst.put("list", list);
+		rst.put("total", total);
+		return rst;
+		
+	}
+
+
+	public void view(HttpServletRequest req) {
+		
+		int gi_no = Integer.parseInt(req.getParameter("gi_no"));
+		
+		GalleryVO ga = ss.getMapper(GalleryMapper.class).view(gi_no);
+		
+		req.setAttribute("ga", ga);
+		req.setAttribute("contentPage", "gallery/view.jsp");
+	}
+
+
+	public void modify(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		String savePath = req.getSession().getServletContext().getRealPath("/resources/file");
+		MultipartRequest mr = null;
+		
+		try {
+//			파일저장
+			mr = new MultipartRequest(req, savePath, 10*1024*1024, "UTF-8", new DefaultFileRenamePolicy());
+
+			String gi_fileName = mr.getParameter("gi_fileName");
+			System.out.println(gi_fileName);
+			
+			File f = new File(savePath+"/"+gi_fileName);
+			f.delete();
+			
+			GalleryVO gallery = new GalleryVO();
+			
+			gallery.setGi_no(Integer.parseInt(mr.getParameter("gi_no")));
+			gallery.setGi_fileName(mr.getFilesystemName("img"));
+			gallery.setGi_title(mr.getParameter("gi_title"));
+			ss.getMapper(GalleryMapper.class).modify(gallery);
+			
+			req.setAttribute("contentPage", "gallery/gallery.jsp");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void delete(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		
+		String filePath = req.getParameter("gi_filePath");
+		String fileName = req.getParameter("gi_fileName");
+		int gi_no = Integer.parseInt(req.getParameter("gi_no"));
+		System.out.println(filePath + fileName + " ***************************************************");
+		File f = new File(filePath+"/"+fileName);
+		f.delete();
+		
+		ss.getMapper(GalleryMapper.class).delete(gi_no);
+		
+		req.setAttribute("contentPage", "gallery/gallery.jsp");
+		
+	}
+
+	
+	
+	
+}

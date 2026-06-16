@@ -1,0 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+<div class="contaner">
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-6">
+			
+			<div class="input-group input-group-sm mb-3">
+			  <span class="input-group-text" id="inputGroup-sizing-sm">title</span>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="${ga.gi_title }" disabled>
+			</div>
+			<img class="img-fluid" src="/resources/file/${ga.gi_fileName}">
+			<input type="hidden" name="gi_fileName" value="${ga.gi_fileName }">
+			<c:if test="${loginMember.mi_id eq ga.mi_id }">
+				<div>
+					<a href="/gallery/modify?gi_no=${ga.gi_no }" class="btn btn-primary">수정</a>
+					<form action="/gallery/delete" method="post"></form>
+					<a href="/gallery/delete?gi_no=${ga.gi_no }&gi_fileName=${ga.gi_fileName}&gi_filePath=${ga.gi_filePath}" class="btn btn-danger">삭제</a>
+				</div>
+			</c:if>
+		</div>
+		<div class="col-3"></div>
+	</div>
+</div>

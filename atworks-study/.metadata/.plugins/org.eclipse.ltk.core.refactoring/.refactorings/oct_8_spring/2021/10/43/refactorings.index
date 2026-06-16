@@ -1,0 +1,58 @@
+1634543815057	Copy file
+1634544026848	Copy compilation unit
+1634544052797	Copy file
+1634544192180	Delete element
+1634545314799	Rename resource 'gallery.jsp'
+1634545327850	Rename resource 'main.jsp'
+1634545537156	Rename resource 'gallery.jsp'
+1634545559242	Rename resource '2.jsp'
+1634545740871	Rename resource 'gallery.jsp'
+1634545748407	Rename resource 'main.jsp'
+1634545765126	Rename resource '2.jsp'
+1634546276650	Rename resource 'gallery.jsp'
+1634546286025	Rename resource 'main.jsp'
+1634546289547	Rename resource '1.jsp'
+1634546970911	Rename resource 'main.jsp'
+1634546976546	Rename resource 'gallery.jsp'
+1634546982408	Rename resource '2.jsp'
+1634603557383	Delete element
+1634603580521	Move compilation unit
+1634603593393	Delete element
+1634603637725	Rename compilation unit 'GalleryContoller.java'
+1634603655117	Rename type 'noticeController'
+1634603658745	Move compilation unit
+1634603669071	Rename type 'boardController'
+1634603672613	Move compilation unit
+1634604475191	Move 'gallery.jsp' to 'gallery'
+1634604491305	Move 'board.jsp' to 'board'
+1634604509154	Move 'notice.jsp' to 'notice'
+1634604539118	Move 'login.jsp' to 'notice'
+1634604552863	Move 'login.jsp' to 'member'
+1634604899015	Rename package 'com.spring.shop.member.VO'
+1634604906570	Rename package 'com.spring.shop.member.vo'
+1634607179927	Copy compilation unit
+1634607189878	Delete element
+1634607349509	Delete element
+1634607851461	Delete element
+1634608179325	Delete element
+1634616884880	Copy file
+1634616946440	Rename package 'com.spring.shop.login.controller'
+1634617062784	Rename compilation unit 'signInController.java'
+1634617232095	Rename package 'com.spring.shop.signIn'
+1634617241244	Rename compilation unit 'SignInController.java'
+1634617506792	Move 'sign.jsp' to 'member'
+1634617532954	Rename resource 'sign.jsp'
+1634617538973	Delete element
+1634618858896	Delete element
+1634622418223	Copy file
+1634622820248	Rename resource 'memberChange.jsp'
+1634627295286	Rename type 'SignOut'
+1634633110112	Rename type 'Board'
+1634633200682	Copy compilation unit
+1634633205381	Copy compilation unit
+1634633207442	Copy compilation unit
+1634633246092	Rename type 'BoardDAO'
+1634633253395	Rename compilation unit 'BoardVO.java'
+1634633260462	Rename type 'BoardMapper'
+1634716611830	Copy file
+1634777160510	Copy file

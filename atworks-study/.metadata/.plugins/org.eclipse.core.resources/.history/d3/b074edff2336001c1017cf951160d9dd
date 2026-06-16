@@ -1,0 +1,22 @@
+package com.spring.shop.board;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class BoardController {
+	
+	
+	
+	@GetMapping("/board")
+	public String board(HttpServletRequest req) {
+		
+		req.setAttribute("contentPage", "board/board.jsp");
+		return "home";
+	}
+	
+}
+}

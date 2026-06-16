@@ -1,0 +1,29 @@
+package com.spring.shop.reple;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class RepleDAO {
+
+	@Autowired
+	SqlSession ss;
+	
+	public List getList(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		int ni_no = Integer.parseInt(req.getParameter("ni_no"));
+		int curPage = Integer.parseInt(req.getParameter("curPage"));
+		int pagePerCnt = Integer.parseInt(req.getParameter("pagePerCnt"));
+		
+		List<RepleVO> rList = ss.getMapper(RepleMapper.class).getList(ni_no);
+		
+		
+		return rList;
+	}
+
+}

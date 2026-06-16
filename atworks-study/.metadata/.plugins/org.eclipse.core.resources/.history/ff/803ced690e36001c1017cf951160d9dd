@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+
+    
+<div class="contaner">
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-6">
+	    ${ga}
+			<img alt="" src="/resources/file/${ga.gi_fileName}">
+			.<img src="/resources/file/' + gallery[i].gi_fileName + '">
+		
+		</div>
+		<div class="col-3"></div>
+	</div>
+</div>

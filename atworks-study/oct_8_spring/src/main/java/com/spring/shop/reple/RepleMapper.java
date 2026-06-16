@@ -1,0 +1,18 @@
+package com.spring.shop.reple;
+
+import java.util.List;
+import java.util.Map;
+
+public interface RepleMapper {
+
+	public abstract List<RepleVO> getList(Map<String, Object> page);
+
+	public abstract int getTotal(int ni_no);
+
+	public abstract int insert(RepleVO re);
+
+	public abstract int modify(RepleVO re);
+
+	public abstract int delect(int ri_no);
+
+}

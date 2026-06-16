@@ -1,0 +1,27 @@
+package com.spring.shop.reple;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+@RequestMapping("/reple/*")
+public class RepleController {
+	
+	@PostMapping("list")
+	@ResponseBody
+	public Map<String, Object> List(HttpServletRequest req){
+		
+		String ni_no = req.getParameter("ni_no") ;\
+		System.out.println(ni_no);
+		return new HashMap();
+		
+	}
+	
+}

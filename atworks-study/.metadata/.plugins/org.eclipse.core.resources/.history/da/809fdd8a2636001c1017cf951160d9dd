@@ -1,0 +1,56 @@
+package com.spring.shop.board;
+
+import java.io.InputStreamReader;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.spring.shop.member.MemberDAO;
+
+@Service
+public class BoardDAO {
+	private static final Logger logger = LoggerFactory.getLogger(MemberDAO.class);
+	
+	@Autowired
+	SqlSession ss;
+
+	public void getCovid(HttpServletRequest req) {
+		
+		
+		
+	}
+	
+	public String callURL(String URL) {
+		System.out.println("받아온 주소 : " + URL);
+		
+		StringBuilder sb = new StringBuilder();
+		URLConnection urlConn = null;
+		InputStreamReader in = null;
+		
+		HostnameVerifier allHostsValid = new HostnameVerifier() {
+			
+			@Override
+			public boolean verify(String hostname, SSLSession session) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		};
+		
+		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+		
+		try {
+			java.net.URL url = 
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+}

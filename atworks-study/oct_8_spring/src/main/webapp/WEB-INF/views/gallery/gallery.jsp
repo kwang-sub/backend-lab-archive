@@ -1,0 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<main>
+
+	<section class="py-5 text-center container">
+		<div class="row py-lg-5">
+			<div class="col-lg-6 col-md-8 mx-auto">
+				<h1 class="fw-light">Album example</h1>
+				<p class="lead text-muted">Something short and leading about the
+					collection below—its contents, the creator, etc. Make it short and
+					sweet, but not too short so folks don’t simply skip over it
+					entirely.</p>
+				<p>
+					<a href="#" class="btn btn-primary my-2">Main call to action</a> <a
+						href="#" class="btn btn-secondary my-2">Secondary action</a>
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<div class="album py-5 bg-light">
+		<div class="container">
+
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="img-contaner">
+			</div>
+			
+			<a href="/gallery/write" class="btn btn-primary">글쓰기</a>
+		</div>
+	</div>
+	<div id="pageNav"></div>
+</main>
+
+<script type="text/javascript">
+	var data = {};
+	var initialize = function(){
+		Search(1);
+		}
+	
+		var Search = function(selPage) {
+			data.curPage = selPage;
+			data.pagePerCnt = 6;
+			$.ajax({
+				type : 'post',
+				url : "/gallery",
+				data : {
+					
+					curPage : data.curPage,
+					pagePerCnt : data.pagePerCnt
+				},
+				success : function(value) {
+					var gallery = value.list;
+					console.log(value);
+					console.log(gallery);
+					$("#img-contaner").children().remove();
+					
+					var html = "";
+					for(var i = 0; i<gallery.length; i++){
+						html += '<div class = "card shadow-sm">';
+						/* html += '<img src="'+gallery[i].gi_filePath +"\\"+ gallery[i].gi_fileName+'">'; */
+						html += '<img src="/resources/file/' + gallery[i].gi_fileName + '">';
+						html += '<div class="card-body">';
+						html += '<a href = "/gallery/view?gi_no='+gallery[i].gi_no+'">'
+						html += '<p class="card-text"> '+gallery[i].gi_title+' </p>';
+						html += '</a>'
+						html += '<div class="d-flex justify-content-between align-items-center">';
+						html += '<div class="btn-group">';
+						html += '<button type="button" class="btn btn-sm btn-outline-secondary">View</button>';
+						html += '<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>';
+						html += '</div>';
+						html += '<small class="text-muted">작성자</small>';
+						html += '</div>';
+						html += '</div>';
+						html += '</div>';
+					}
+					$("#img-contaner").append(html);
+					
+					$("#pageNav").paging({
+						pageSize : data.pagePerCnt,  
+						PAGE_PER_CNT:  data.pagePerCnt, 
+						currentPage: data.curPage,
+						pageTotal: value.total
+					});
+				}
+			});
+		
+		};
+	var goPage = function(selPage){
+		console.log(selPage);
+		Search(selPage);
+	}
+</script>

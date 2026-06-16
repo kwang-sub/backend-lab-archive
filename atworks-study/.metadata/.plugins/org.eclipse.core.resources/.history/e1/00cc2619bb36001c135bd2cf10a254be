@@ -1,0 +1,113 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+	<div class="contaner">
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8">
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">국내 확진자수</th>
+				      <th scope="col">국내 완치자수</th>
+				      <th scope="col">국내 사망자수</th>
+				      <th scope="col">국내 격리자수</th>
+				    </tr>
+				  </thead>
+				  <tbody id="total">
+				  
+				   
+				  </tbody>
+				</table>
+				
+				<div >
+					<canvas id="myChart" width="400px" height="400px"></canvas>
+				</div>
+			</div>
+			<div class="col-2"></div>
+			
+		</div>
+		
+	</div>
+	<div class="container"> 
+		<canvas id="myChart"></canvas> 
+	</div>
+
+
+
+<script type="text/javascript">
+	var initialize = function(){
+		var Html = "";
+		$.ajax({
+			type : 'get',
+			url : "https://api.corona-19.kr/korea/?serviceKey=BedTft6H3gDEqN4Z18I7vAmJlcGXxjCki",
+			success : function(value) {
+				
+				console.log(value);
+				
+				var html = '';
+				
+				html += '<tr>';
+				html += '<td>'+value.TotalCase;
+				html += '</td>';
+				html += '<td>'+value.TotalRecovered;
+				html += '</td>';
+				html += '<td>'+value.TotalDeath;
+				html += '</td>';
+				html += '<td>'+value.NowCase;
+				html += '</td>';
+				html += '</tr>';
+				
+				$("#total").append(html);
+				
+				
+				var ctx = document.getElementById('myChart');
+				var myChart = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: [value.city1n, value.city2n, value.city3n, value.city4n, value.city5n],
+						datasets: [{
+							label: '전국 확진자 top5',
+							data: [value.city1p, value.city2p, value.city3p, value.city4p, value.city5p],
+							backgroundColor: [
+								'rgba(255, 99, 132, 0.2)',
+								'rgba(54, 162, 235, 0.2)',
+								'rgba(255, 206, 86, 0.2)',
+								'rgba(75, 192, 192, 0.2)',
+								'rgba(153, 102, 255, 0.2)'
+							],
+							borderColor: [
+								'rgba(255, 99, 132, 1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)',
+								'rgba(153, 102, 255, 1)'
+							],
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: false,
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero: true
+								}
+							}]
+						},
+					}
+				});
+		
+				
+				
+				
+			}
+		});
+		
+	}
+	
+
+
+	</script>
+	
+

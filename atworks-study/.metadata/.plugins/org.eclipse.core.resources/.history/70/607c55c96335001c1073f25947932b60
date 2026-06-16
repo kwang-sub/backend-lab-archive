@@ -1,0 +1,8 @@
+package com.spring.shop.reple;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class RepleDAO {
+
+}

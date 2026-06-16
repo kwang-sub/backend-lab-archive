@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.shop.reple.RepleMapper">
+	
+	<select id="getTotal" parameterType="int" resultType="int">
+		select count(*) from reple_info where ni_no = #{ni_no}
+	</select>
+	
+	<select id="getList" parameterType="hashmap" resultType="com.spring.shop.reple.RepleVO">
+		select * from reple_info
+		where ni_no = #{ni_no}
+		order by ri_no desc
+		limit #{E_OFFSET}-#{S_OFFSET} offset #{S_OFFSET}
+	</select>
+	
+	<insert id="insert" parameterType="com.spring.shop.reple.RepleVO" >
+		insert into reple_info (ri_no, ri_content, mi_id, ni_no) values(nextval('seq_ri_no'), #{ri_content}, #{mi_id}, #{ni_no})
+	</insert>
+	
+	<update id="modify">
+		update reple_info set ri_content = #{ri_content} where ri_no = #{ri_no}
+	</update>
+	
+	<delete id="delect">
+		delete from reple_info where ri_no = #{ri_no}
+	</delete>
+</mapper>
